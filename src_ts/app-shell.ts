@@ -21,6 +21,7 @@ export class AppShell extends LitElement {
       css`
         .header-container {
           padding: 16px 16px 0px;
+          padding-bottom: 4px;
           text-align: right;
         }
         .logo {
@@ -31,7 +32,7 @@ export class AppShell extends LitElement {
 
         .content-container {
           width: 100%;
-          max-width: 500px;
+          max-width: 600px;
           padding: 0 8px;
         }
         .apps-container {
@@ -51,16 +52,11 @@ export class AppShell extends LitElement {
           flex-direction: column;
           align-items: center;
           padding: 12px 6px;
+          height: 110px;
         }
-        .svg-wrapper {
-          height: 55px;
-          width: 55px;
-          display: flex;
-          flex-direction: column;
-          background-color: lightgray;
-          border-radius: 50%;
-          align-items: center;
-          justify-content: center;
+        .app-wrapper:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
         }
         .category {
           color: var(--secondary-text-color);
@@ -73,7 +69,8 @@ export class AppShell extends LitElement {
           text-align: center;
         }
         .footer {
-          height: 100px;
+          padding: 50px 20px 0 20px;
+          text-align: right;
         }
         fieldset {
           margin-bottom: 20px;
@@ -88,6 +85,22 @@ export class AppShell extends LitElement {
           width: 20px;
           height: 20px;
         }
+        #app-logo {
+          height: 65px;
+        }
+
+        svg {
+          border-radius: 50%;
+        }
+
+        #unicefLogo {
+          height: 20px;
+        }
+
+        a {
+          text-decoration: none;
+          color: var(--primary-text-color);
+        }
       `
     ];
   }
@@ -98,68 +111,92 @@ export class AppShell extends LitElement {
     return html`
       ${appTheme}
       <div class="header-container">
-        <img id="profile" src="./images/perm_identity-24px.svg" alt="etools Logo" />
+        <img id="profile" src="./images/perm_identity-24px.svg" alt="User Profile" />
       </div>
       <div class="logo">
-        <img id="app-logo" class="logo" src="./images/etools-logo-color-white.svg" alt="eTools" />
+        <img id="app-logo" src="./images/eTools-logo-black.png" alt="eTools Logo" />
       </div>
       <div class="layout-h">
         <div class="content-container">
-        <fieldset>
-          <legend class="category">Programme Management</legend>
-          <div class="apps-container">
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${unppIcon}</div>
-              <div class="app-name">UN Partner Portal</div>
+          <fieldset>
+            <legend class="category">Programme Management</legend>
+            <div class="apps-container">
+              <a href="">
+                <div class="app-wrapper">
+                  <div>${unppIcon}</div>
+                  <div class="app-name">UN Partner Portal</div>
+                </div>
+              </a>
+              <a href="/pmp/">
+                <div class="app-wrapper">
+                  <div>${pmpIcon}</div>
+                  <div class="app-name">Partnership Management</div>
+                </div>
+              </a>
             </div>
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${pmpIcon}</div>
-              <div class="app-name">Partnership Management</div>
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
 
-        <fieldset>
-          <legend class="category">Monitoring & Assurance</legend>
-          <div class="apps-container">
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${tripsIcon}</div>
-              <div class="app-name">Trip Management</div>
+          <fieldset>
+            <legend class="category">Monitoring & Assurance</legend>
+            <div class="apps-container">
+              <a href="/t2f/">
+                <div class="app-wrapper">
+                  <div>${tripsIcon}</div>
+                  <div class="app-name">Trip Management</div>
+                </div>
+              </a>
+              <a href="/tpm/">
+                <div class="app-wrapper">
+                  <div>${tpmIcon}</div>
+                  <div class="app-name">Third Party Monitoring</div>
+                </div>
+              </a>
+              <a href="/ap/">
+                <div class="app-wrapper">
+                  <div>${famIcon}</div>
+                  <div class="app-name">Financial Assurance</div>
+                </div>
+              </a>
+              <a href="/psea/">
+                <div class="app-wrapper">
+                  <div>${pseaIcon}</div>
+                  <div class="app-name">PSEA Assurance</div>
+                </div>
+              </a>
+              <a href="/fm/">
+                <div class="app-wrapper">
+                  <div>${fmIcon}</div>
+                  <div class="app-name">Field Monitoring</div>
+                </div>
+              </a>
             </div>
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${tpmIcon}</div>
-              <div class="app-name">Third Party Monitoring</div>
-            </div>
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${famIcon}</div>
-              <div class="app-name">Financial Assurance</div>
-            </div>
-            <div class="app-wrapper">
-            <div class="svg-wrapper">${pseaIcon}</div>
-              <div class="app-name">PSEA Assurance</div>
-            </div>
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${fmIcon}</div>
-              <div class="app-name">Field Monitoring</div>
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
 
-          
-        <fieldset>
-          <legend class="category">Dashborads & Analytics</legend>
-          <div class="apps-container">
-            <div class="app-wrapper">
-              <div class="svg-wrapper">${apdIcon}</div>
-              <div class="app-name">Action Points</div>
-             </div>
-            <div class="app-wrapper"><div class="svg-wrapper">${dashIcon}</div> <div class="app-name">Dashboards</div></div>
-            <div class="app-wrapper"><div class="svg-wrapper">${powerBiIcon}</div> <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div></div>
-            <div class="app-wrapper"><div class="svg-wrapper">${externalIcon}</div> <div class="app-name">Datamart</div></div>
-          </div>
-        </fieldset>
-
-        <div class="footer"></div>
+            
+          <fieldset>
+            <legend class="category">Dashborads & Analytics</legend>
+            <div class="apps-container">
+              <a href="/ap/">
+                <div class="app-wrapper">
+                  <div>${apdIcon}</div>
+                  <div class="app-name">Action Points</div>
+                </div>
+              </a>
+              <a href="/dash/">
+                <div class="app-wrapper"><div>${dashIcon}</div> <div class="app-name">Dashboards</div></div>
+              </a>
+              <a href="">
+                <div class="app-wrapper"><div>${powerBiIcon}</div> <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div></div>
+              </a>
+              <a href="">
+                <div class="app-wrapper"><div>${externalIcon}</div> <div class="app-name">Datamart</div></div>
+              </a>
+            </div>
+          </fieldset>       
+        </div>
+      </div>
+      <div class="footer">
+        <img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" />
       </div>
     `;
   }
