@@ -1,4 +1,4 @@
-import {css, customElement, html, LitElement, property} from 'lit-element';
+import {css, customElement, html, LitElement, property, query} from 'lit-element';
 import { getUserProfile } from './api-requests.js';
 import {
   apdIcon,
@@ -135,6 +135,25 @@ export class AppShell extends LitElement {
           outline: none;
           box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
         }
+
+        select {
+          padding-right: 16px;
+          border: none;
+          text-align-last: right;
+          color: var(--secondary-text-color);
+          font-weight: bold;
+          font-size: 16px;
+        }
+
+        select { 
+          appearance: none;
+          pointer-events: none;
+        }
+
+        select:focus {
+          outline: none;
+          border-bottom: 2px solid var(--primary-color);
+        }
       `
     ];
   }
@@ -147,7 +166,12 @@ export class AppShell extends LitElement {
       <div class="layout-h">
         <div class="unicefLogo"><img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" /></div>
         <div class="header-container">       
-          <label style="padding-right: 15px;" class="larger-font">${this.userProfile?.country.name}</label>
+         
+
+          <select tabindex="-1" name="countries" id="countries" @change="${this.countryChanged}">
+            ${this.userProfile.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
+            
+          </select>
          
           <img tabindex="0" id="profile" src="./images/perm_identity-24px.svg"
            @keydown="${this.callClickOnEnterAndSpace}" @click="${this.toggleUserProfileView}" alt="User Profile" />
@@ -257,6 +281,9 @@ export class AppShell extends LitElement {
   @property({type: Boolean})
   showUserProfileView = false;
 
+  @query('select')
+  countriesDropdown!: HTMLSelectElement;
+
   async connectedCallback() {
     super.connectedCallback();
 
@@ -328,6 +355,18 @@ export class AppShell extends LitElement {
       event.preventDefault();
       this.showUserProfileView = false;
     }
+  }
+
+  countryChanged(ev: any) {
+    const selVal =this._getSelectedCountryId();
+    if (selVal == this.userProfile.country.id) {
+      return;
+    }
+
+  }
+
+  _getSelectedCountryId() {
+    return this.countriesDropdown.selectedOptions ? this.countriesDropdown.selectedOptions[0]?.value : null;
   }
 
 }
