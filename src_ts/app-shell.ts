@@ -356,7 +356,7 @@ export class AppShell extends LitElement {
     }
   }
 
-  countryChanged(ev: any) {
+  countryChanged(_ev: any) {
     const selVal =this._getSelectedCountryId();
     if (selVal == this.userProfile.country.id) {
       return;
