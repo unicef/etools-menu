@@ -582,5 +582,5 @@ export const profileIcon = html`
   </svg>
 `;
 
-export const datamartIcon = html`<svg height="45" viewBox="0 0 23 25" width="45" fill="gray">
+export const datamartIcon = html`<svg id="datamart" height="45" viewBox="0 0 23 25" width="45" fill="gray">
   <g><path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"></path></g></svg>`;

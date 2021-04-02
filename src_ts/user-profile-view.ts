@@ -8,7 +8,8 @@ export class UserProfileView extends LitElement {
                 margin-left: 8px;
                 background-color: white;
                 max-width: 600px;
-                max-height 600px;
+                max-height: 700px;
+                overflow-y: auto;
                 box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
                 border-radius: 8px;
                 position: absolute;
@@ -47,7 +48,7 @@ export class UserProfileView extends LitElement {
                 right: 6px;
                 top: 6px;
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 18px;
                 border: none;
                 background-color: white;
                 color: var(--secondary-text-color);

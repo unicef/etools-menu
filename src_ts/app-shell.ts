@@ -4,7 +4,6 @@ import {
   apdIcon,
   dashIcon,
   datamartIcon,
-  externalIcon,
   famIcon,
   fmIcon,
   pmpIcon,
