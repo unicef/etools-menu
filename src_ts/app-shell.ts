@@ -3,6 +3,7 @@ import { getUserProfile } from './api-requests.js';
 import {
   apdIcon,
   dashIcon,
+  datamartIcon,
   externalIcon,
   famIcon,
   fmIcon,
@@ -14,6 +15,7 @@ import {
   unppIcon
 } from './app-selector-icons.js';
 import appTheme from './app-theme.js';
+import './user-profile-view.js';
 
 @customElement('app-shell')
 export class AppShell extends LitElement {
@@ -92,6 +94,12 @@ export class AppShell extends LitElement {
           width: 20px;
           height: 20px;
           margin-left: 15px;
+          position: relative;
+          cursor: pointer;
+        }
+        img#profile:hover {
+          background-color: rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
         }
         #app-logo {
           height: 65px;
@@ -99,6 +107,10 @@ export class AppShell extends LitElement {
 
         svg {
           border-radius: 50%;
+        }
+
+        svg#powerBiIcon {
+          border-radius: initial;
         }
 
         #unicefLogo {
@@ -109,15 +121,19 @@ export class AppShell extends LitElement {
           text-decoration: none;
           color: var(--primary-text-color);
         }
-        mwc-select {
-          --mdc-select-fill-color: white;
-          --mdc-menu-item-height: 30px;
-        }
+       
         .unicefLogo {
           padding-left: 16px;
           display: flex;
           align-items: center;
           padding-top:6px;
+        }
+        *[hidden] {
+          display: none;
+        }
+        img#profile:focus {
+          outline: none;
+          box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
         }
       `
     ];
@@ -132,7 +148,12 @@ export class AppShell extends LitElement {
         <div class="unicefLogo"><img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" /></div>
         <div class="header-container">       
           <label style="padding-right: 15px;" class="larger-font">${this.userProfile?.country.name}</label>
-          <img id="profile" src="./images/perm_identity-24px.svg" alt="User Profile" />
+         
+          <img tabindex="0" id="profile" src="./images/perm_identity-24px.svg"
+           @keydown="${this.callClickOnEnterAndSpace}" @click="${this.toggleUserProfileView}" alt="User Profile" />
+          <user-profile-view id="user-dropdown" ?hidden="${!this.showUserProfileView}" .userProfile="${this.userProfile}"
+            @keydown="${this.closeOnEsc}" @close="${() => this.showUserProfileView = false}">
+          </user-profile-view>
         </div>
       </div>
       <div class="logo">
@@ -167,25 +188,25 @@ export class AppShell extends LitElement {
                   <div class="app-name">Trip Management</div>
                 </div>
               </a>
-              <a href="/tpm/">
+              <a href="/tpm/" ?hidden="${!this.showMonitoringApps}">
                 <div class="app-wrapper">
                   <div>${tpmIcon}</div>
                   <div class="app-name">Third Party Monitoring</div>
                 </div>
               </a>
-              <a href="/ap/">
+              <a href="/ap/" ?hidden="${!this.showAssuranceApps}">
                 <div class="app-wrapper">
                   <div>${famIcon}</div>
                   <div class="app-name">Financial Assurance</div>
                 </div>
               </a>
-              <a href="/psea/">
+              <a href="/psea/" ?hidden="${!this.showAssuranceApps}">
                 <div class="app-wrapper">
                   <div>${pseaIcon}</div>
                   <div class="app-name">PSEA Assurance</div>
                 </div>
               </a>
-              <a href="/fm/">
+              <a href="/fm/" ?hidden="${!this.showMonitoringApps}">
                 <div class="app-wrapper">
                   <div>${fmIcon}</div>
                   <div class="app-name">Field Monitoring</div>
@@ -211,7 +232,9 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper"><div>${powerBiIcon}</div> <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div></div>
               </a>
               <a href="https://datamart.unicef.io/">
-                <div class="app-wrapper"><div>${externalIcon}</div> <div class="app-name">Datamart</div></div>
+                <div class="app-wrapper">
+                  <div>${datamartIcon}</div>
+                  <div class="app-name">Datamart</div></div>
               </a>
             </div>
           </fieldset>       
@@ -225,15 +248,86 @@ export class AppShell extends LitElement {
   @property({type: Object})
   userProfile?: any;
 
+  @property({type: Boolean})
+  showAssuranceApps = true;
+
+  @property({type: Boolean})
+  showMonitoringApps = true;
+
+  @property({type: Boolean})
+  showUserProfileView = false;
+
   async connectedCallback() {
     super.connectedCallback();
+
+    document.addEventListener('click', this.closeDropdownOnClickOutside.bind(this) as any, true);
+    this.addEventListener('keydown', this.closeOnEsc.bind(this) as any, true);
+
     try {
       this.userProfile = await getUserProfile();
+      this.setAppsVisibility();
     } catch (error) {
       if (error.status == 403) {
         window.location.href = window.location.origin + '/login'
       }
-    }
-    
+    }    
   }
+
+  setAppsVisibility() {
+    this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
+    this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
+  }
+
+  getVisibilityByGroup(givenGroup: string) {
+    if (!this.userProfile.is_unicef_user) {
+      return this.userProfile.groups.any((g: {id: number, name: string; }) => g.name === givenGroup);
+    }
+    return true; // TODO
+  }
+
+  toggleUserProfileView() {
+    this.showUserProfileView = !this.showUserProfileView;
+  }
+
+  closeDropdownOnClickOutside(e: any) {
+    if (!this.showUserProfileView) {
+      return;
+    }
+    if (this._isInPath(e.path, 'id', 'profile')) {
+      return;
+    }
+    if (!this._isInPath(e.path, 'id', 'user-dropdown')) {
+     this.showUserProfileView = false;
+    }
+  }
+
+  _isInPath(path: [], prop: string, value: string) {
+      path = path || [];
+      for (let i = 0; i < path.length; i++) {
+        if (path[i][prop] === value) {
+            return true;
+        }
+      }
+      return false;
+  } 
+
+  callClickOnEnterAndSpace(event: any) {
+    if ((event.key === ' ' || event.key === 'Enter') && !event.ctrlKey) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      event.target.click();
+      // cancel scroll down on Space click
+      return false;
+    }
+    return;
+  }
+  
+  closeOnEsc(event: any) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.showUserProfileView = false;
+    }
+  }
+
 }
