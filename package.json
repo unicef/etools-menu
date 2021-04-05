@@ -15,7 +15,6 @@
         "build:static": "polymer build"
     },
     "dependencies": {
-        "@material/mwc-select": "0.20.0",
         "dexie": "^3.0.1",
         "lit-element": "^2.3.1"
     },
