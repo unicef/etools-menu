@@ -143,6 +143,7 @@ export class AppShell extends LitElement {
           color: var(--secondary-text-color);
           font-weight: bold;
           font-size: 16px;
+          cursor: pointer;
         }      
 
         select:focus-visible {
@@ -189,7 +190,7 @@ export class AppShell extends LitElement {
                   <div class="app-name">UN Partner Portal</div>
                 </div>
               </a>
-              <a href="/pmp/">
+              <a href="/pmp/" ?hidden="${!this.userProfile?.is_unicef_user}">
                 <div class="app-wrapper">
                   <div>${pmpIcon}</div>
                   <div class="app-name">Partnership Management</div>
@@ -235,7 +236,7 @@ export class AppShell extends LitElement {
           </fieldset>
 
             
-          <fieldset>
+          <fieldset ?hidden="${!this.userProfile?.is_unicef_user}">
             <legend class="larger-font">Dashboards & Analytics</legend>
             <div class="apps-container">
               <a href="/ap/">
