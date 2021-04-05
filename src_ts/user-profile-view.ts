@@ -8,7 +8,7 @@ export class UserProfileView extends LitElement {
                 margin-left: 8px;
                 background-color: white;
                 max-width: 600px;
-                max-height: 700px;
+                max-height: 600px;
                 overflow-y: auto;
                 box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
                 border-radius: 8px;

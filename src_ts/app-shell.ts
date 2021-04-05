@@ -79,7 +79,7 @@ export class AppShell extends LitElement {
           text-align: center;
         }
         .footer {
-          padding: 50px 20px 0 20px;
+          padding: 30px 20px 0 20px;
         }
         fieldset {
           margin-bottom: 20px;
