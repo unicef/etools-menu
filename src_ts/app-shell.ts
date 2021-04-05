@@ -1,5 +1,5 @@
 import {css, customElement, html, LitElement, property, query} from 'lit-element';
-import { getUserProfile } from './api-requests.js';
+import { changeCountry, getUserProfile } from './api-requests.js';
 import {
   apdIcon,
   dashIcon,
@@ -15,6 +15,7 @@ import {
 } from './app-selector-icons.js';
 import appTheme from './app-theme.js';
 import './user-profile-view.js';
+import Dexie from 'dexie';
 
 @customElement('app-shell')
 export class AppShell extends LitElement {
@@ -142,16 +143,11 @@ export class AppShell extends LitElement {
           color: var(--secondary-text-color);
           font-weight: bold;
           font-size: 16px;
-        }
+        }      
 
-        select { 
-          appearance: none;
-          pointer-events: none;
-        }
-
-        select:focus {
+        select:focus-visible {
           outline: none;
-          border-bottom: 2px solid var(--primary-color);
+          border-bottom: 2px solid var(--secondary-text-color);
         }
       `
     ];
@@ -167,7 +163,7 @@ export class AppShell extends LitElement {
         <div class="header-container">       
          
 
-          <select tabindex="-1" name="countries" id="countries" @change="${this.countryChanged}">
+          <select name="countries" id="countries" @change="${this.countryChanged}">
             ${this.userProfile.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
             
           </select>
@@ -293,7 +289,7 @@ export class AppShell extends LitElement {
       this.userProfile = await getUserProfile();
       this.setAppsVisibility();
     } catch (error) {
-      if (error.status == 403) {
+      if ([403, 401].includes(error.status)) {
         window.location.href = window.location.origin + '/login'
       }
     }    
@@ -358,14 +354,51 @@ export class AppShell extends LitElement {
 
   countryChanged(_ev: any) {
     const selVal =this._getSelectedCountryId();
-    if (selVal == this.userProfile.country.id) {
+    if (selVal == this.userProfile.country.id || !selVal) {
       return;
     }
+
+    changeCountry(selVal!)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((_error: any) => {
+        // TODO
+      });
 
   }
 
   _getSelectedCountryId() {
     return this.countriesDropdown.selectedOptions ? this.countriesDropdown.selectedOptions[0]?.value : null;
+  }
+
+  clearDexieDbs() {
+    // except Chrome and Opera this method will delete only the dbs created with Dexie
+    Dexie.getDatabaseNames((dbsNames: string[]) => {
+      let dexieDbsNumber = dbsNames.length;
+      if (dexieDbsNumber > 0) {
+        dbsNames.forEach((dbName) => {
+          this.deleteDexieDb(dbName);
+        });
+      }
+    });
+  }
+
+  deleteDexieDb(dbName: string) {
+    let db = new Dexie(dbName);
+    let finished = false;
+    db.delete().catch(function(err: any) {
+      console.log('Could not delete indexedDB: ' + dbName, 'etools-page-refresh-mixin', err, true);
+    }.bind(this)).finally(function() {
+      finished = true;
+    }.bind(this));
+    // *In Edge - catch and finally of db.delete() are not executed,
+    //            when the site is opened in more than one tab
+    setTimeout(() => {
+      if (!finished) {
+        alert("Please close any other tabs, that have this page open, for the Refresh to work properly.");
+      }
+    }, 9000);
   }
 
 }
