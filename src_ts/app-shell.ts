@@ -148,7 +148,7 @@ export class AppShell extends LitElement {
 
         select:focus-visible {
           outline: none;
-          border-bottom: 2px solid var(--secondary-text-color);
+          border-bottom: 1px solid var(--secondary-text-color);
         }
       `
     ];
