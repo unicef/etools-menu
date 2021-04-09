@@ -1,10 +1,10 @@
-version: 2
+version: 2.1
 jobs:
   test:
     working_directory: ~/code
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:11.9.0
+      - image: node:12.18.3
     steps:
       - checkout
       - restore_cache:
@@ -29,7 +29,7 @@ jobs:
     working_directory: ~/code
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:11.9.0
+      - image: node:12.18.3
     steps:
       - checkout
       - setup_remote_docker
@@ -63,22 +63,20 @@ jobs:
             docker push unicef/etools-menu:$TAG
 
 workflows:
-  version: 2
+  version: 2.1
   build_and_test:
     jobs:
       - test:
           filters:
             branches:
               ignore:
-                - master
+                - main
                 - staging
                 - develop
-                - epd
       - build_and_deploy:
           filters:
             branches:
               only:
-                - master
+                - main
                 - staging
                 - develop
-                - epd
