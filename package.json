@@ -2,6 +2,8 @@
     "name": "etools-epd",
     "description": "Etools ePD",
     "version": "1.0.0",
+    "revision": "revNo",
+    "buildDate": "bDate",
     "contributors": [
         "eTools Team"
     ],
