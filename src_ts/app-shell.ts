@@ -1,6 +1,7 @@
 import {css, customElement, html, LitElement, property, query} from 'lit-element';
 import { changeCountry, getUserProfile } from './api-requests.js';
 import {
+  adminIcon,
   apdIcon,
   dashIcon,
   datamartIcon,
@@ -93,7 +94,7 @@ export class AppShell extends LitElement {
           padding: 6px;
           width: 20px;
           height: 20px;
-          margin-left: 15px;
+          margin-left: 25px;
           position: relative;
           cursor: pointer;
         }
@@ -150,6 +151,15 @@ export class AppShell extends LitElement {
           outline: none;
           border-bottom: 1px solid var(--secondary-text-color);
         }
+
+        .admin {
+          margin: 0 15px 0 25px;
+        }
+
+        .admin-label {
+          padding-left: 4px;
+          padding-top: 3px;
+        }
       `
     ];
   }
@@ -174,6 +184,10 @@ export class AppShell extends LitElement {
           <user-profile-view id="user-dropdown" ?hidden="${!this.showUserProfileView}" .userProfile="${this.userProfile}"
             @keydown="${this.closeOnEsc}" @close="${() => this.showUserProfileView = false}">
           </user-profile-view>
+
+          <a href="/admin/" class="admin" ?hidden="${!this.userProfile.is_superuser}">
+            <div class="layout-h"><div style="padding-top:4px;">${adminIcon}</div> <div class="admin-label larger-font">Admin</div></div>
+          </a>
         </div>
       </div>
       <div class="logo">

@@ -24,7 +24,7 @@ export function changeCountry(countryId: string) {
 }
 
 export function getCsrfHeader() {
-    const csrfHeaders = {};
+    const csrfHeaders: any = {};
     const csrfToken = _getCSRFCookie();
 
     if (csrfToken) {
