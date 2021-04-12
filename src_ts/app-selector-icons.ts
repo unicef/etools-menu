@@ -117,7 +117,7 @@ export const pseaIcon = html`<svg height="45" viewBox="0 0 72 72" width="45">
   </g>
 </svg>`;
 
-export const adminIcon = html`<svg height="24" viewBox="0 0 20 20" width="24">
+export const adminIcon = html`<svg height="20" viewBox="0 0 20 20" width="20">
   <g id="adminIcon">
     <path fill="none" d="M0 0h20v20H0V0z" />
     <path
