@@ -253,7 +253,7 @@ export class AppShell extends LitElement {
           <fieldset ?hidden="${!this.userProfile?.is_unicef_user}">
             <legend class="larger-font">Dashboards & Analytics</legend>
             <div class="apps-container">
-              <a href="/ap/">
+              <a href="/apd/">
                 <div class="app-wrapper">
                   <div>${apdIcon}</div>
                   <div class="app-name">Action Points</div>
