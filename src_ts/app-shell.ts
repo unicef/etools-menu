@@ -175,7 +175,7 @@ export class AppShell extends LitElement {
          
 
           <select name="countries" id="countries" @change="${this.countryChanged}">
-            ${this.userProfile.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
+            ${this.userProfile?.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
             
           </select>
          

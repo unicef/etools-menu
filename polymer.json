@@ -6,6 +6,9 @@
       "rules": ["polymer-3"],
       "ignoreWarnings": ["could-not-resolve-reference", "non-literal-import"]
     },
+    "extraDependencies": [
+      "manifest.json"
+    ],
     "builds": [
       {
         "name": "esm-bundled",
