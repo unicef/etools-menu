@@ -175,7 +175,7 @@ export class AppShell extends LitElement {
          
 
           <select name="countries" id="countries" @change="${this.countryChanged}">
-            ${this.userProfile.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
+            ${this.userProfile?.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
             
           </select>
          
@@ -185,7 +185,7 @@ export class AppShell extends LitElement {
             @keydown="${this.closeOnEsc}" @close="${() => this.showUserProfileView = false}">
           </user-profile-view>
 
-          <a href="/admin/" class="admin" ?hidden="${!this.userProfile.is_superuser}">
+          <a href="/admin/" class="admin" ?hidden="${!Boolean(this.userProfile.is_superuser)}">
             <div class="layout-h"><div style="padding-top:4px;">${adminIcon}</div> <div class="admin-label larger-font">Admin</div></div>
           </a>
         </div>
@@ -216,7 +216,7 @@ export class AppShell extends LitElement {
           <fieldset>
             <legend class="larger-font">Monitoring & Assurance</legend>
             <div class="apps-container">
-              <a href="/t2f/">
+              <a href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
                 <div class="app-wrapper">
                   <div>${tripsIcon}</div>
                   <div class="app-name">Trip Management</div>
@@ -317,9 +317,9 @@ export class AppShell extends LitElement {
 
   getVisibilityByGroup(givenGroup: string) {
     if (!this.userProfile.is_unicef_user) {
-      return this.userProfile.groups.any((g: {id: number, name: string; }) => g.name === givenGroup);
+      return this.userProfile.groups.some((g: {id: number, name: string; }) => g.name === givenGroup);
     }
-    return true; // TODO
+    return true;
   }
 
   toggleUserProfileView() {
