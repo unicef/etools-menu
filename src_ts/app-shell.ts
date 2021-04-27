@@ -78,6 +78,7 @@ export class AppShell extends LitElement {
           margin-top: 12px;
           width: 95px;
           text-align: center;
+          font-weight: bold;
         }
         .footer {
           padding: 30px 20px 0 20px;
