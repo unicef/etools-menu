@@ -1,4 +1,11 @@
-import {css, customElement, html, LitElement, property, query} from 'lit-element';
+import {
+  css,
+  customElement,
+  html,
+  LitElement,
+  property,
+  query,
+} from 'lit-element';
 import { changeCountry, getUserProfile } from './api-requests.js';
 import {
   adminIcon,
@@ -12,7 +19,7 @@ import {
   pseaIcon,
   tpmIcon,
   tripsIcon,
-  unppIcon
+  unppIcon,
 } from './app-selector-icons.js';
 import appTheme from './app-theme.js';
 import './user-profile-view.js';
@@ -53,7 +60,6 @@ export class AppShell extends LitElement {
         .layout-h {
           display: flex;
           flex-direction: row;
-          
         }
         .justify-center {
           justify-content: center;
@@ -90,7 +96,6 @@ export class AppShell extends LitElement {
           border-radius: 8px;
         }
         img#profile {
-          background-color: rgba(0, 0, 0, 0.04);
           border-radius: 50%;
           padding: 6px;
           width: 20px;
@@ -100,7 +105,6 @@ export class AppShell extends LitElement {
           cursor: pointer;
         }
         img#profile:hover {
-          background-color: rgba(0, 0, 0, 0.08);
           box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
         }
         #app-logo {
@@ -116,19 +120,19 @@ export class AppShell extends LitElement {
         }
 
         #unicefLogo {
-          height: 20px;         
+          height: 20px;
         }
 
         a {
           text-decoration: none;
           color: var(--primary-text-color);
         }
-       
+
         .unicefLogo {
           padding-left: 16px;
           display: flex;
           align-items: center;
-          padding-top:6px;
+          padding-top: 6px;
         }
         *[hidden] {
           display: none;
@@ -146,7 +150,7 @@ export class AppShell extends LitElement {
           font-weight: bold;
           font-size: 16px;
           cursor: pointer;
-        }      
+        }
 
         select:focus-visible {
           outline: none;
@@ -161,7 +165,7 @@ export class AppShell extends LitElement {
           padding-left: 4px;
           padding-top: 3px;
         }
-      `
+      `,
     ];
   }
 
@@ -171,28 +175,65 @@ export class AppShell extends LitElement {
     return html`
       ${appTheme}
       <div class="layout-h">
-        <div class="unicefLogo"><img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" /></div>
-        <div class="header-container">       
-         
-
-          <select name="countries" id="countries" @change="${this.countryChanged}">
-            ${this.userProfile?.countries_available.map((c: any) => html`<option ?selected="${this.userProfile.country?.id == c.id}" value="${c.id}">${c.name}</option>`)}
-            
+        <div class="unicefLogo">
+          <img
+            id="unicefLogo"
+            src="./images/UNICEF_logo.png"
+            alt="UNICEF Logo"
+          />
+        </div>
+        <div class="header-container">
+          <select
+            name="countries"
+            id="countries"
+            @change="${this.countryChanged}"
+          >
+            ${this.userProfile?.countries_available.map(
+              (c: any) =>
+                html`<option
+                  ?selected="${this.userProfile.country?.id == c.id}"
+                  value="${c.id}"
+                >
+                  ${c.name}
+                </option>`
+            )}
           </select>
-         
-          <img tabindex="0" id="profile" src="./images/perm_identity-24px.svg"
-           @keydown="${this.callClickOnEnterAndSpace}" @click="${this.toggleUserProfileView}" alt="User Profile" />
-          <user-profile-view id="user-dropdown" ?hidden="${!this.showUserProfileView}" .userProfile="${this.userProfile}"
-            @keydown="${this.closeOnEsc}" @close="${() => this.showUserProfileView = false}">
+
+          <img
+            tabindex="0"
+            id="profile"
+            src="./images/perm_identity-24px.svg"
+            @keydown="${this.callClickOnEnterAndSpace}"
+            @click="${this.toggleUserProfileView}"
+            alt="User Profile"
+          />
+          <user-profile-view
+            id="user-dropdown"
+            ?hidden="${!this.showUserProfileView}"
+            .userProfile="${this.userProfile}"
+            @keydown="${this.closeOnEsc}"
+            @close="${() => (this.showUserProfileView = false)}"
+          >
           </user-profile-view>
 
-          <a href="/admin/" class="admin" ?hidden="${!Boolean(this.userProfile.is_superuser)}">
-            <div class="layout-h"><div style="padding-top:4px;">${adminIcon}</div> <div class="admin-label larger-font">Admin</div></div>
+          <a
+            href="/admin/"
+            class="admin"
+            ?hidden="${!Boolean(this.userProfile.is_superuser)}"
+          >
+            <div class="layout-h">
+              <div style="padding-top:4px;">${adminIcon}</div>
+              <div class="admin-label larger-font">Admin</div>
+            </div>
           </a>
         </div>
       </div>
       <div class="logo">
-        <img id="app-logo" src="./images/eTools-logo-black.png" alt="eTools Logo" />
+        <img
+          id="app-logo"
+          src="./images/eTools-logo-black.png"
+          alt="eTools Logo"
+        />
       </div>
       <div class="layout-h justify-center">
         <div class="content-container">
@@ -250,7 +291,6 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-            
           <fieldset ?hidden="${!this.userProfile?.is_unicef_user}">
             <legend class="larger-font">Dashboards & Analytics</legend>
             <div class="apps-container">
@@ -261,35 +301,45 @@ export class AppShell extends LitElement {
                 </div>
               </a>
               <a href="/dash/">
-                <div class="app-wrapper"><div>${dashIcon}</div> <div class="app-name">Dashboards</div></div>
+                <div class="app-wrapper">
+                  <div>${dashIcon}</div>
+                  <div class="app-name">Dashboards</div>
+                </div>
               </a>
-              <a href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/5e60ab16-cce5-4c21-8620-de0c4c6415de/ReportSectionfe8562e6ef8c4eddcb52">
-                <div class="app-wrapper"><div>${powerBiIcon}</div> <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div></div>
+              <a
+                href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/5e60ab16-cce5-4c21-8620-de0c4c6415de/ReportSectionfe8562e6ef8c4eddcb52"
+              >
+                <div class="app-wrapper">
+                  <div>${powerBiIcon}</div>
+                  <div class="app-name">
+                    Implementation Intelligence (I<sup>2</sup>)
+                  </div>
+                </div>
               </a>
               <a href="https://datamart.unicef.io/">
                 <div class="app-wrapper">
                   <div>${datamartIcon}</div>
-                  <div class="app-name">Datamart</div></div>
+                  <div class="app-name">Datamart</div>
+                </div>
               </a>
             </div>
-          </fieldset>       
+          </fieldset>
         </div>
       </div>
-      <div class="footer">        
-      </div>
+      <div class="footer"></div>
     `;
   }
 
-  @property({type: Object})
+  @property({ type: Object })
   userProfile?: any;
 
-  @property({type: Boolean})
+  @property({ type: Boolean })
   showAssuranceApps = true;
 
-  @property({type: Boolean})
+  @property({ type: Boolean })
   showMonitoringApps = true;
 
-  @property({type: Boolean})
+  @property({ type: Boolean })
   showUserProfileView = false;
 
   @query('select')
@@ -298,7 +348,11 @@ export class AppShell extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener('click', this.closeDropdownOnClickOutside.bind(this) as any, true);
+    document.addEventListener(
+      'click',
+      this.closeDropdownOnClickOutside.bind(this) as any,
+      true
+    );
     this.addEventListener('keydown', this.closeOnEsc.bind(this) as any, true);
 
     try {
@@ -306,9 +360,9 @@ export class AppShell extends LitElement {
       this.setAppsVisibility();
     } catch (error) {
       if ([403, 401].includes(error.status)) {
-        window.location.href = window.location.origin + '/login'
+        window.location.href = window.location.origin + '/login';
       }
-    }    
+    }
   }
 
   setAppsVisibility() {
@@ -318,7 +372,9 @@ export class AppShell extends LitElement {
 
   getVisibilityByGroup(givenGroup: string) {
     if (!this.userProfile.is_unicef_user) {
-      return this.userProfile.groups.some((g: {id: number, name: string; }) => g.name === givenGroup);
+      return this.userProfile.groups.some(
+        (g: { id: number; name: string }) => g.name === givenGroup
+      );
     }
     return true;
   }
@@ -335,19 +391,19 @@ export class AppShell extends LitElement {
       return;
     }
     if (!this._isInPath(e.path, 'id', 'user-dropdown')) {
-     this.showUserProfileView = false;
+      this.showUserProfileView = false;
     }
   }
 
   _isInPath(path: [], prop: string, value: string) {
-      path = path || [];
-      for (let i = 0; i < path.length; i++) {
-        if (path[i][prop] === value) {
-            return true;
-        }
+    path = path || [];
+    for (let i = 0; i < path.length; i++) {
+      if (path[i][prop] === value) {
+        return true;
       }
-      return false;
-  } 
+    }
+    return false;
+  }
 
   callClickOnEnterAndSpace(event: any) {
     if ((event.key === ' ' || event.key === 'Enter') && !event.ctrlKey) {
@@ -360,7 +416,7 @@ export class AppShell extends LitElement {
     }
     return;
   }
-  
+
   closeOnEsc(event: any) {
     if (event.key === 'Escape') {
       event.preventDefault();
@@ -369,7 +425,7 @@ export class AppShell extends LitElement {
   }
 
   countryChanged(_ev: any) {
-    const selVal =this._getSelectedCountryId();
+    const selVal = this._getSelectedCountryId();
     if (selVal == this.userProfile.country.id || !selVal) {
       return;
     }
@@ -381,11 +437,12 @@ export class AppShell extends LitElement {
       .catch((_error: any) => {
         // TODO
       });
-
   }
 
   _getSelectedCountryId() {
-    return this.countriesDropdown.selectedOptions ? this.countriesDropdown.selectedOptions[0]?.value : null;
+    return this.countriesDropdown.selectedOptions
+      ? this.countriesDropdown.selectedOptions[0]?.value
+      : null;
   }
 
   clearDexieDbs() {
@@ -403,18 +460,30 @@ export class AppShell extends LitElement {
   deleteDexieDb(dbName: string) {
     let db = new Dexie(dbName);
     let finished = false;
-    db.delete().catch(function(err: any) {
-      console.log('Could not delete indexedDB: ' + dbName, 'etools-page-refresh-mixin', err, true);
-    }.bind(this)).finally(function() {
-      finished = true;
-    }.bind(this));
+    db.delete()
+      .catch(
+        function (err: any) {
+          console.log(
+            'Could not delete indexedDB: ' + dbName,
+            'etools-page-refresh-mixin',
+            err,
+            true
+          );
+        }.bind(this)
+      )
+      .finally(
+        function () {
+          finished = true;
+        }.bind(this)
+      );
     // *In Edge - catch and finally of db.delete() are not executed,
     //            when the site is opened in more than one tab
     setTimeout(() => {
       if (!finished) {
-        alert("Please close any other tabs, that have this page open, for the Refresh to work properly.");
+        alert(
+          'Please close any other tabs, that have this page open, for the Refresh to work properly.'
+        );
       }
     }, 9000);
   }
-
 }
