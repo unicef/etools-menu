@@ -1,7 +1,12 @@
 /* eslint-disable max-len */
-import {html} from 'lit-element';
+import { html } from 'lit-element';
 
-export const dashIcon = html`<svg id="dashIcon" height="45" viewBox="0 0 72 72" width="45">
+export const dashIcon = html`<svg
+  id="dashIcon"
+  height="45"
+  viewBox="0 0 72 72"
+  width="45"
+>
   <g id="dashIcon">
     <polygon id="Shape" fill="#009A54" points="0,0 72,0 72,72 0,72"></polygon>
     <path
@@ -130,17 +135,48 @@ export const adminIcon = html`<svg height="20" viewBox="0 0 20 20" width="20">
 export const tpmIcon = html`<svg height="45" viewBox="0 0 72 72" width="45">
   <g id="tpmIcon">
     <polygon id="Shape" fill="#72C300" points="0 0 72 0 72 72 0 72"></polygon>
-    <polygon id="Line" fill="#FFFFFF" fill-rule="nonzero" points="27 21 41 21 41 18 27 18"></polygon>
-    <polygon id="Line" fill="#FFFFFF" fill-rule="nonzero" points="19 27 19 41 22 41 22 27"></polygon>
+    <polygon
+      id="Line"
+      fill="#FFFFFF"
+      fill-rule="nonzero"
+      points="27 21 41 21 41 18 27 18"
+    ></polygon>
+    <polygon
+      id="Line"
+      fill="#FFFFFF"
+      fill-rule="nonzero"
+      points="19 27 19 41 22 41 22 27"
+    ></polygon>
     <polygon
       id="Line"
       fill="#FFFFFF"
       fill-rule="nonzero"
       points="30.2380676 52.5051041 52.3234863 30.2756195 48.351059 30.2401733 30.2429601 48.3491079"
     ></polygon>
-    <rect id="Rectangle-7" fill="#FFFFFF" x="13" y="13" width="14" height="14"></rect>
-    <rect id="Rectangle-7" fill="#FFFFFF" x="45" y="13" width="14" height="14"></rect>
-    <rect id="Rectangle-7" fill="#FFFFFF" x="13" y="44" width="14" height="14"></rect>
+    <rect
+      id="Rectangle-7"
+      fill="#FFFFFF"
+      x="13"
+      y="13"
+      width="14"
+      height="14"
+    ></rect>
+    <rect
+      id="Rectangle-7"
+      fill="#FFFFFF"
+      x="45"
+      y="13"
+      width="14"
+      height="14"
+    ></rect>
+    <rect
+      id="Rectangle-7"
+      fill="#FFFFFF"
+      x="13"
+      y="44"
+      width="14"
+      height="14"
+    ></rect>
   </g>
 </svg>`;
 
@@ -163,7 +199,13 @@ export const unppIcon = html`<svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-  <g viewBox="0 0 36 36" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+  <g
+    viewBox="0 0 36 36"
+    stroke="none"
+    stroke-width="1"
+    fill="none"
+    fill-rule="evenodd"
+  >
     <g transform="translate(-286.000000, -269.000000)">
       <g transform="translate(150.000000, 203.000000)">
         <g id="UNPP-icon" transform="translate(136.000000, 66.000000)">
@@ -494,7 +536,11 @@ export const etoolsLogo = html`<svg
         d="m116.3,62.6c0,5.4 1.2,9.4 3.7,11.8c2.5,2.5 6.3,3.7 11.3,3.7c2.5,0 4.6,-0.5 6.3,-1.5c1.7,-1 3.3,-2.4 4.6,-4.2l7,2.9c-1.8,3 -4.3,5.4 -7.5,7.1c-3.2,1.7 -6.8,2.6 -10.9,2.6c-4.1,0 -7.6,-0.6 -10.5,-1.7c-2.9,-1.1 -5.2,-2.7 -7,-4.8c-1.8,-2.1 -3.1,-4.6 -3.9,-7.5c-0.8,-2.9 -1.2,-6.2 -1.2,-9.8l0,-1c0,-1.5 0,-3 0.1,-4.5c0.1,-1.4 0.2,-2.9 0.6,-4.3c0.3,-1.4 0.8,-2.8 1.5,-4.2c0.7,-1.4 1.6,-2.8 2.9,-4.1c2.1,-2.3 4.6,-4.1 7.5,-5.2c2.9,-1.1 5.9,-1.7 9,-1.7c3.5,0 6.5,0.6 9.2,1.7s4.9,2.7 6.7,4.6c1.8,2 3.2,4.3 4.1,7c0.9,2.7 1.4,5.7 1.4,9l0,4.2l-34.9,0l0,-0.1zm0,-6.5l27,0l0,-0.8c0,-1.5 -0.3,-3.1 -0.9,-4.5c-0.6,-1.5 -1.5,-2.8 -2.7,-3.9c-1.2,-1.1 -2.6,-2.1 -4.3,-2.8c-1.7,-0.7 -3.5,-1.1 -5.6,-1.1c-2,0 -3.8,0.3 -5.5,1c-1.7,0.7 -3.1,1.6 -4.3,2.7c-1.2,1.1 -2.1,2.4 -2.8,3.9s-1,3 -1,4.6l0,0.9l0.1,0z"
         id="svg_12"
       />
-      <path fill="#757575" d="m177.1,27.2l0,56.7l-8.3,0l0,-56.7l-21.4,0l0,-7.6l51.1,0l-2.4,7.6l-19,0z" id="svg_13" />
+      <path
+        fill="#757575"
+        d="m177.1,27.2l0,56.7l-8.3,0l0,-56.7l-21.4,0l0,-7.6l51.1,0l-2.4,7.6l-19,0z"
+        id="svg_13"
+      />
       <path
         fill="#757575"
         d="m230.6,78.3c-2.2,2.3 -4.6,4 -7.3,5c-2.7,1.1 -5.6,1.6 -8.8,1.6c-3,0 -5.9,-0.6 -8.7,-1.7c-2.8,-1.1 -5.2,-2.8 -7.4,-5c-2.3,-2.3 -3.9,-5.1 -4.6,-8.1c-0.7,-3.1 -1.1,-6.3 -1.1,-9.6l0,-1.8c0.1,-3.2 0.5,-6.1 1.2,-8.6c0.7,-2.5 2.3,-5.1 4.7,-7.6c2.2,-2.2 4.6,-3.9 7.2,-4.9c2.6,-1 5.5,-1.6 8.6,-1.6c3.1,0 5.9,0.5 8.6,1.5c2.6,1 5,2.6 7.2,4.8c2.2,2.3 3.8,4.7 4.8,7.4c1,2.6 1.5,5.6 1.5,8.8l0,1.9c0,3.3 -0.4,6.5 -1.1,9.4c-0.8,3.1 -2.4,5.9 -4.8,8.5zm-1.5,-17.8l0,-1.8c0,-4.5 -1.2,-8.2 -3.5,-11c-1.2,-1.5 -2.8,-2.6 -4.6,-3.5s-4,-1.2 -6.4,-1.2c-2.3,0 -4.4,0.4 -6.2,1.2c-1.8,0.8 -3.3,1.9 -4.5,3.3c-2.5,2.8 -3.7,6.6 -3.7,11.4l0,2.1c0,2.6 0.3,5 0.8,7.2c0.6,2.2 1.5,4.1 2.9,5.7c1.1,1.4 2.5,2.4 4.3,3.1c1.8,0.7 3.9,1.1 6.4,1.1c2.3,0 4.3,-0.3 6,-1c1.7,-0.7 3.1,-1.6 4.3,-2.9c1.6,-1.6 2.7,-3.6 3.3,-6c0.6,-2.4 0.9,-4.9 0.9,-7.7z"
@@ -519,7 +565,12 @@ export const etoolsLogo = html`<svg
   </g>
 </svg>`;
 
-export const powerBiIcon = html` <svg id="powerBiIcon" height="45" viewBox="0 0 36 36" width="45">
+export const powerBiIcon = html` <svg
+  id="powerBiIcon"
+  height="45"
+  viewBox="0 0 36 36"
+  width="45"
+>
   <g id="power-bi">
     <path
       clip-path="url(#SVGID_2_)"
@@ -557,7 +608,13 @@ export const powerBiIcon = html` <svg id="powerBiIcon" height="45" viewBox="0 0 
 </svg>`;
 
 export const externalIcon = html`
-  <svg id="externalIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+  <svg
+    id="externalIcon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+  >
     <path d="M0 0h24v24H0z" fill="none" />
     <path
       d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
@@ -565,9 +622,14 @@ export const externalIcon = html`
   </svg>
 `;
 
-export const fmIcon = html` <svg xmlns="http://www.w3.org/2000/svg" height="45" viewBox="0 0 72 72" width="45">
+export const fmIcon = html` <svg
+  xmlns="http://www.w3.org/2000/svg"
+  height="45"
+  viewBox="0 0 72 72"
+  width="45"
+>
   <g id="fmIcon">
-    <polygon id="Shape" fill="#F5A65B" points="0 0 72 0 72 72 0 72"></polygon>
+    <polygon id="Shape" fill="#008080" points="0 0 72 0 72 72 0 72"></polygon>
     <path
       fill="#FFFFFF"
       transform="scale(2.2 2.2), translate(4 4)"
@@ -577,10 +639,30 @@ export const fmIcon = html` <svg xmlns="http://www.w3.org/2000/svg" height="45" 
 </svg>`;
 
 export const profileIcon = html`
-  <svg xmlns="http://www.w3.org/2000/svg" height="45" viewBox="0 0 34 34" width="45">
-    <g id="person"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></g>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="45"
+    viewBox="0 0 34 34"
+    width="45"
+  >
+    <g id="person">
+      <path
+        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+      ></path>
+    </g>
   </svg>
 `;
 
-export const datamartIcon = html`<svg id="datamart" height="45" viewBox="0 0 23 25" width="45" fill="gray">
-  <g><path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"></path></g></svg>`;
+export const datamartIcon = html`<svg
+  id="datamart"
+  height="45"
+  viewBox="0 0 23 25"
+  width="45"
+  fill="gray"
+>
+  <g>
+    <path
+      d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"
+    ></path>
+  </g>
+</svg>`;
