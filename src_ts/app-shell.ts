@@ -252,10 +252,16 @@ export class AppShell extends LitElement {
                   <div class="app-name">Partnership Management</div>
                 </div>
               </a>
+              <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member}">
+              <div class="app-wrapper">
+                <div>${pmpIcon}</div>
+                <div class="app-name">ePD</div>
+              </div>
+            </a>
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset ?hidden="${!this.showMonitoringOrAssuranceApps}">
             <legend class="larger-font">Monitoring & Assurance</legend>
             <div class="apps-container">
               <a href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
@@ -340,6 +346,9 @@ export class AppShell extends LitElement {
   showMonitoringApps = true;
 
   @property({ type: Boolean })
+  showMonitoringOrAssuranceApps = true;
+
+  @property({ type: Boolean })
   showUserProfileView = false;
 
   @query('select')
@@ -368,6 +377,7 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
+    this.showMonitoringOrAssuranceApps = this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
   }
 
   getVisibilityByGroup(givenGroup: string) {
