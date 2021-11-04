@@ -17,12 +17,6 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: TsLint
-          command: npm run tsToJs
-      - run:
-          name: EsLint
-          command: npm run lint
-      - run:
           name: Polymer3 Build
           command: npm run build
           no_output_timeout: 25m
