@@ -1,27 +1,27 @@
 {
-    "name": "etools-menu",
-    "description": "Etools Menu",
-    "version": "1.0.0",
-    "revision": "revNo",
-    "buildDate": "bDate",
-    "contributors": [
-        "eTools Team"
-    ],
-    "license": "BSD-3-Clause",
-    "repository": "https://github.com/unicef/etools-menu",
-    "scripts": {
-        "tsToJs": "tsc --skipLibCheck || true",
-        "tsEslint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
-        "start": "polymer serve -H 0.0.0.0 -p 8080",
-        "build": "export NODE_OPTIONS=--max_old_space_size=4096 && npm run tsToJs && npm run build:static",
-        "build:static": "polymer build"
-    },
-    "dependencies": {
-        "dexie": "^3.0.1",
-        "lit-element": "^2.3.1"
-    },
-    "devDependencies": {
-        "polymer-cli": "^1.9.11",
-        "typescript": "^3.9.6"
-    }
+  "name": "etools-menu",
+  "description": "Etools Menu",
+  "version": "1.0.0",
+  "revision": "revNo",
+  "buildDate": "bDate",
+  "contributors": [
+    "eTools Team"
+  ],
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/unicef/etools-menu",
+  "scripts": {
+    "tsToJs": "tsc --skipLibCheck || true",
+    "tsEslint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
+    "start": "tsc --watch --preserveWatchOutput & polymer serve -H 0.0.0.0 -p 8080",
+    "build": "export NODE_OPTIONS=--max_old_space_size=4096 && npm run tsToJs && npm run build:static",
+    "build:static": "polymer build"
+  },
+  "dependencies": {
+    "dexie": "^3.0.1",
+    "lit-element": "^2.3.1"
+  },
+  "devDependencies": {
+    "polymer-cli": "^1.9.11",
+    "typescript": "^3.9.6"
+  }
 }
