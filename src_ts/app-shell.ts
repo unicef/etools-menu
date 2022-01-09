@@ -219,7 +219,7 @@ export class AppShell extends LitElement {
           <a
             href="/admin/"
             class="admin"
-            ?hidden="${!Boolean(this.userProfile.is_superuser)}"
+            ?hidden="${!this.userProfile.is_superuser}"
           >
             <div class="layout-h">
               <div style="padding-top:4px;">${adminIcon}</div>
@@ -252,12 +252,15 @@ export class AppShell extends LitElement {
                   <div class="app-name">Partnership Management</div>
                 </div>
               </a>
-              <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member}">
-              <div class="app-wrapper">
-                <div>${pmpIcon}</div>
-                <div class="app-name">ePD</div>
-              </div>
-            </a>
+              <a
+                href="/epd/"
+                ?hidden="${!this.userProfile?._partner_staff_member}"
+              >
+                <div class="app-wrapper">
+                  <div>${pmpIcon}</div>
+                  <div class="app-name">ePD</div>
+                </div>
+              </a>
             </div>
           </fieldset>
 
@@ -377,7 +380,10 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showMonitoringOrAssuranceApps = this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
+    this.showMonitoringOrAssuranceApps =
+      this.showAssuranceApps ||
+      this.showMonitoringApps ||
+      this.userProfile?.is_unicef_user;
   }
 
   getVisibilityByGroup(givenGroup: string) {
