@@ -5,8 +5,7 @@ const app = express();
 const basedir = __dirname + '/build/'; // eslint-disable-line
 
 function getSourcesPath(request) {
-  let clientCapabilities = browserCapabilities.browserCapabilities(
-    request.headers['user-agent']);
+  let clientCapabilities = browserCapabilities.browserCapabilities(request.headers['user-agent']);
 
   clientCapabilities = new Set(clientCapabilities); // eslint-disable-line
   if (clientCapabilities.has('modules')) {
@@ -20,7 +19,7 @@ app.use('/menu/', (req, res, next) => {
   express.static(getSourcesPath(req))(req, res, next);
 });
 
-app.get(/.*service-worker\.js/, function(req, res) {
+app.get(/.*service-worker\.js/, function (req, res) {
   res.sendFile(getSourcesPath(req) + 'service-worker.js');
 });
 
