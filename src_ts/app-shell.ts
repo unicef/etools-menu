@@ -1,12 +1,5 @@
-import {
-  css,
-  customElement,
-  html,
-  LitElement,
-  property,
-  query,
-} from 'lit-element';
-import { changeCountry, getUserProfile } from './api-requests.js';
+import {css, customElement, html, LitElement, property, query} from 'lit-element';
+import {changeCountry, getUserProfile} from './api-requests.js';
 import {
   adminIcon,
   apdIcon,
@@ -19,7 +12,7 @@ import {
   pseaIcon,
   tpmIcon,
   tripsIcon,
-  unppIcon,
+  unppIcon
 } from './app-selector-icons.js';
 import appTheme from './app-theme.js';
 import './user-profile-view.js';
@@ -165,7 +158,7 @@ export class AppShell extends LitElement {
           padding-left: 4px;
           padding-top: 3px;
         }
-      `,
+      `
     ];
   }
 
@@ -176,26 +169,13 @@ export class AppShell extends LitElement {
       ${appTheme}
       <div class="layout-h">
         <div class="unicefLogo">
-          <img
-            id="unicefLogo"
-            src="./images/UNICEF_logo.png"
-            alt="UNICEF Logo"
-          />
+          <img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" />
         </div>
         <div class="header-container">
-          <select
-            name="countries"
-            id="countries"
-            @change="${this.countryChanged}"
-          >
-            ${this.userProfile?.countries_available.map(
+          <select name="countries" id="countries" @change="${this.countryChanged}">
+            ${this.userProfile?.countries_available?.map(
               (c: any) =>
-                html`<option
-                  ?selected="${this.userProfile.country?.id == c.id}"
-                  value="${c.id}"
-                >
-                  ${c.name}
-                </option>`
+                html`<option ?selected="${this.userProfile?.country?.id == c.id}" value="${c.id}">${c.name}</option>`
             )}
           </select>
 
@@ -216,11 +196,7 @@ export class AppShell extends LitElement {
           >
           </user-profile-view>
 
-          <a
-            href="/admin/"
-            class="admin"
-            ?hidden="${!Boolean(this.userProfile.is_superuser)}"
-          >
+          <a href="/admin/" class="admin" ?hidden="${!this.userProfile?.is_superuser}">
             <div class="layout-h">
               <div style="padding-top:4px;">${adminIcon}</div>
               <div class="admin-label larger-font">Admin</div>
@@ -229,11 +205,7 @@ export class AppShell extends LitElement {
         </div>
       </div>
       <div class="logo">
-        <img
-          id="app-logo"
-          src="./images/eTools-logo-black.png"
-          alt="eTools Logo"
-        />
+        <img id="app-logo" src="./images/eTools-logo-black.png" alt="eTools Logo" />
       </div>
       <div class="layout-h justify-center">
         <div class="content-container">
@@ -253,11 +225,11 @@ export class AppShell extends LitElement {
                 </div>
               </a>
               <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member}">
-              <div class="app-wrapper">
-                <div>${pmpIcon}</div>
-                <div class="app-name">ePD</div>
-              </div>
-            </a>
+                <div class="app-wrapper">
+                  <div>${pmpIcon}</div>
+                  <div class="app-name">ePD</div>
+                </div>
+              </a>
             </div>
           </fieldset>
 
@@ -317,9 +289,7 @@ export class AppShell extends LitElement {
               >
                 <div class="app-wrapper">
                   <div>${powerBiIcon}</div>
-                  <div class="app-name">
-                    Implementation Intelligence (I<sup>2</sup>)
-                  </div>
+                  <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div>
                 </div>
               </a>
               <a href="https://datamart.unicef.io/">
@@ -336,19 +306,19 @@ export class AppShell extends LitElement {
     `;
   }
 
-  @property({ type: Object })
+  @property({type: Object})
   userProfile?: any;
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   showAssuranceApps = true;
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   showMonitoringApps = true;
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   showMonitoringOrAssuranceApps = true;
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   showUserProfileView = false;
 
   @query('select')
@@ -357,11 +327,7 @@ export class AppShell extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
 
-    document.addEventListener(
-      'click',
-      this.closeDropdownOnClickOutside.bind(this) as any,
-      true
-    );
+    document.addEventListener('click', this.closeDropdownOnClickOutside.bind(this) as any, true);
     this.addEventListener('keydown', this.closeOnEsc.bind(this) as any, true);
 
     try {
@@ -377,14 +343,13 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showMonitoringOrAssuranceApps = this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
+    this.showMonitoringOrAssuranceApps =
+      this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
   }
 
   getVisibilityByGroup(givenGroup: string) {
-    if (!this.userProfile.is_unicef_user) {
-      return this.userProfile.groups.some(
-        (g: { id: number; name: string }) => g.name === givenGroup
-      );
+    if (!this.userProfile?.is_unicef_user) {
+      return this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === givenGroup);
     }
     return true;
   }
@@ -436,7 +401,7 @@ export class AppShell extends LitElement {
 
   countryChanged(_ev: any) {
     const selVal = this._getSelectedCountryId();
-    if (selVal == this.userProfile.country.id || !selVal) {
+    if (selVal == this.userProfile?.country?.id || !selVal) {
       return;
     }
 
@@ -450,9 +415,7 @@ export class AppShell extends LitElement {
   }
 
   _getSelectedCountryId() {
-    return this.countriesDropdown.selectedOptions
-      ? this.countriesDropdown.selectedOptions[0]?.value
-      : null;
+    return this.countriesDropdown.selectedOptions ? this.countriesDropdown.selectedOptions[0]?.value : null;
   }
 
   clearDexieDbs() {
@@ -473,12 +436,7 @@ export class AppShell extends LitElement {
     db.delete()
       .catch(
         function (err: any) {
-          console.log(
-            'Could not delete indexedDB: ' + dbName,
-            'etools-page-refresh-mixin',
-            err,
-            true
-          );
+          console.log('Could not delete indexedDB: ' + dbName, 'etools-page-refresh-mixin', err, true);
         }.bind(this)
       )
       .finally(
@@ -490,9 +448,7 @@ export class AppShell extends LitElement {
     //            when the site is opened in more than one tab
     setTimeout(() => {
       if (!finished) {
-        alert(
-          'Please close any other tabs, that have this page open, for the Refresh to work properly.'
-        );
+        alert('Please close any other tabs, that have this page open, for the Refresh to work properly.');
       }
     }, 9000);
   }

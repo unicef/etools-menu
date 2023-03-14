@@ -1,4 +1,4 @@
-import { css, customElement, html, LitElement, property } from 'lit-element';
+import {css, customElement, html, LitElement, property} from 'lit-element';
 
 @customElement('user-profile-view')
 export class UserProfileView extends LitElement {
@@ -55,11 +55,11 @@ export class UserProfileView extends LitElement {
           color: var(--secondary-text-color);
           cursor: pointer;
         }
-      `,
+      `
     ];
   }
 
-  @property({ type: Object })
+  @property({type: Object})
   userProfile: any = {};
 
   public render() {
@@ -68,27 +68,22 @@ export class UserProfileView extends LitElement {
       <div class="container">
         <div>
           <div class="paper-label">Name</div>
-          <div class="input-label">${this.userProfile.name}</div>
+          <div class="input-label">${this.userProfile?.name}</div>
         </div>
         <div>
           <div class="paper-label">Available Countries</div>
           <div class="input-label">
-            ${this.userProfile.countries_available.map(
+            ${this.userProfile?.countries_available?.map(
               (c: any, index: number) =>
-                c.name +
-                (index == this.userProfile.countries_available.length - 1
-                  ? ''
-                  : ' | ')
+                c.name + (index == this.userProfile?.countries_available?.length - 1 ? '' : ' | ')
             )}
           </div>
         </div>
         <div>
           <div class="paper-label">My Groups</div>
           <div class="input-label">
-            ${this.userProfile.groups.map(
-              (g: any, index: number) =>
-                g.name +
-                (index == this.userProfile.groups.length - 1 ? '' : ' | ')
+            ${this.userProfile?.groups?.map(
+              (g: any, index: number) => g.name + (index == this.userProfile?.groups?.length - 1 ? '' : ' | ')
             )}
           </div>
         </div>
@@ -105,7 +100,7 @@ export class UserProfileView extends LitElement {
       new CustomEvent('close', {
         detail: '',
         bubbles: true,
-        composed: true,
+        composed: true
       })
     );
   }
