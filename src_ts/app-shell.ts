@@ -362,10 +362,10 @@ export class AppShell extends LitElement {
     if (!this.showUserProfileView) {
       return;
     }
-    if (this._isInPath(e.path, 'id', 'profile')) {
+    if (this._isInPath(e.composedPath(), 'id', 'profile')) {
       return;
     }
-    if (!this._isInPath(e.path, 'id', 'user-dropdown')) {
+    if (!this._isInPath(e.composedPath(), 'id', 'user-dropdown')) {
       this.showUserProfileView = false;
     }
   }
