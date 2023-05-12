@@ -1,5 +1,5 @@
 import {css, customElement, html, LitElement, property, query} from 'lit-element';
-import {changeCountry, getUserProfile} from './api-requests.js';
+import {changeCountry, changeOrganization, getUserProfile} from './api-requests.js';
 import {
   adminIcon,
   apdIcon,
@@ -17,6 +17,7 @@ import {
 import appTheme from './app-theme.js';
 import './user-profile-view.js';
 import Dexie from 'dexie';
+import '@unicef-polymer/etools-loading/etools-loading.js';
 
 @customElement('app-shell')
 export class AppShell extends LitElement {
@@ -167,6 +168,7 @@ export class AppShell extends LitElement {
     // language=HTML
     return html`
       ${appTheme}
+      <etools-loading ?active="${this.showLoading}"></etools-loading>
       <div class="layout-h">
         <div class="unicefLogo">
           <img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" />
@@ -176,6 +178,20 @@ export class AppShell extends LitElement {
             ${this.userProfile?.countries_available?.map(
               (c: any) =>
                 html`<option ?selected="${this.userProfile?.country?.id == c.id}" value="${c.id}">${c.name}</option>`
+            )}
+          </select>
+
+          <select
+            name="countries"
+            id="countries"
+            @change="${this.onOrganizationChange}"
+            style="margin-inline-start: 6px;"
+          >
+            ${this.userProfile?.organizations_available?.map(
+              (o: any) =>
+                html`<option ?selected="${this.userProfile?.organization?.id == o.id}" value="${o.id}">
+                  ${o.name}
+                </option>`
             )}
           </select>
 
@@ -324,6 +340,9 @@ export class AppShell extends LitElement {
   @query('select')
   countriesDropdown!: HTMLSelectElement;
 
+  @property({type: Boolean})
+  showLoading = false;
+
   async connectedCallback() {
     super.connectedCallback();
 
@@ -337,6 +356,21 @@ export class AppShell extends LitElement {
       if ([403, 401].includes(error.status)) {
         window.location.href = window.location.origin + '/login';
       }
+    }
+  }
+
+  protected onOrganizationChange(e: CustomEvent) {
+    if (!e.detail.selectedItem) {
+      return;
+    }
+
+    const selectedOrganizationId = parseInt(e.detail.selectedItem.id, 10);
+
+    if (selectedOrganizationId !== this.userProfile.organization?.id) {
+      this.showLoading = true;
+
+      // send post request to change_organization endpoint
+      changeOrganization(String(selectedOrganizationId)).finally(() => window.location.reload());
     }
   }
 
@@ -404,14 +438,10 @@ export class AppShell extends LitElement {
     if (selVal == this.userProfile?.country?.id || !selVal) {
       return;
     }
-
-    changeCountry(selVal!)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((_error: any) => {
-        // TODO
-      });
+    this.showLoading = true;
+    changeCountry(selVal!).finally(() => {
+      window.location.reload();
+    });
   }
 
   _getSelectedCountryId() {

@@ -25,6 +25,22 @@ export function changeCountry(countryId: string) {
   });
 }
 
+export function changeOrganization(orgId: string) {
+  return fetch(endpoints.changeCountry.url, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain',
+      'Content-Type': 'application/json;charset=UTF-8',
+      ...getCsrfHeader()
+    },
+    body: JSON.stringify({organization: orgId})
+  }).then((resp) => {
+    if (Number(resp.status) >= 400) {
+      throw resp.json();
+    }
+  });
+}
+
 export function getCsrfHeader() {
   const csrfHeaders: any = {};
   const csrfToken = _getCSRFCookie();
