@@ -26,7 +26,7 @@ export function changeCountry(countryId: string) {
 }
 
 export function changeOrganization(orgId: string) {
-  return fetch(endpoints.changeCountry.url, {
+  return fetch(endpoints.changeOrganization.url, {
     method: 'POST',
     headers: {
       Accept: 'application/json, text/plain',
