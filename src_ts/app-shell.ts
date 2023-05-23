@@ -2,6 +2,7 @@ import {css, customElement, html, LitElement, property, query} from 'lit-element
 import {changeCountry, changeOrganization, getUserProfile} from './api-requests.js';
 import {
   adminIcon,
+  ampIcon,
   apdIcon,
   dashIcon,
   datamartIcon,
@@ -312,6 +313,18 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper">
                   <div>${datamartIcon}</div>
                   <div class="app-name">Datamart</div>
+                </div>
+              </a>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="larger-font">Access Management</legend>
+            <div class="apps-container">
+              <a href="/amp/">
+                <div class="app-wrapper">
+                  <div>${ampIcon}</div>
+                  <div class="app-name">Access Management Portal</div>
                 </div>
               </a>
             </div>
