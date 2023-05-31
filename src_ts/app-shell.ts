@@ -160,6 +160,9 @@ export class AppShell extends LitElement {
           padding-left: 4px;
           padding-top: 3px;
         }
+        .warning {
+          border: 4px solid red;
+        }
       `
     ];
   }
@@ -183,11 +186,13 @@ export class AppShell extends LitElement {
           </select>
 
           <select
-            name="countries"
-            id="countries"
+            name="organizations"
+            id="organizations"
             @change="${this.onOrganizationChange}"
             style="margin-inline-start: 6px;"
+            class="${!this.userProfile.organization ? 'warning' : ''}"
           >
+            <option ?selected="${!this.userProfile?.organization}" value="${null}">Select Organization</option>
             ${this.userProfile?.organizations_available?.map(
               (o: any) =>
                 html`<option ?selected="${this.userProfile?.organization?.id == o.id}" value="${o.id}">
@@ -372,12 +377,12 @@ export class AppShell extends LitElement {
     }
   }
 
-  protected onOrganizationChange(e: CustomEvent) {
-    if (!e.detail.selectedItem) {
+  protected onOrganizationChange(e: any) {
+    if (!e.target.value) {
       return;
     }
 
-    const selectedOrganizationId = parseInt(e.detail.selectedItem.id, 10);
+    const selectedOrganizationId = parseInt(e.target.value, 10);
 
     if (selectedOrganizationId !== this.userProfile.organization?.id) {
       this.showLoading = true;
