@@ -5,7 +5,7 @@ RUN apk add --update bash
 RUN apk add git
 RUN npm config set unsafe-perm true
 RUN npm install -g --unsafe-perm polymer-cli
-RUN npm install -g typescript
+RUN npm install -g typescript@4.9.5
 
 
 WORKDIR /tmp
