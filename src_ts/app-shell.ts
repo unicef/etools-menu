@@ -1,7 +1,8 @@
 import {css, customElement, html, LitElement, property, query} from 'lit-element';
-import {changeCountry, getUserProfile} from './api-requests.js';
+import {changeCountry, changeOrganization, getUserProfile} from './api-requests.js';
 import {
   adminIcon,
+  ampIcon,
   apdIcon,
   dashIcon,
   datamartIcon,
@@ -17,6 +18,7 @@ import {
 import appTheme from './app-theme.js';
 import './user-profile-view.js';
 import Dexie from 'dexie';
+import '@unicef-polymer/etools-loading/etools-loading.js';
 
 @customElement('app-shell')
 export class AppShell extends LitElement {
@@ -158,6 +160,9 @@ export class AppShell extends LitElement {
           padding-left: 4px;
           padding-top: 3px;
         }
+        .warning {
+          border: 4px solid red;
+        }
       `
     ];
   }
@@ -167,6 +172,7 @@ export class AppShell extends LitElement {
     // language=HTML
     return html`
       ${appTheme}
+      <etools-loading ?active="${this.showLoading}"></etools-loading>
       <div class="layout-h">
         <div class="unicefLogo">
           <img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" />
@@ -176,6 +182,22 @@ export class AppShell extends LitElement {
             ${this.userProfile?.countries_available?.map(
               (c: any) =>
                 html`<option ?selected="${this.userProfile?.country?.id == c.id}" value="${c.id}">${c.name}</option>`
+            )}
+          </select>
+
+          <select
+            name="organizations"
+            id="organizations"
+            @change="${this.onOrganizationChange}"
+            style="margin-inline-start: 6px;"
+            class="${!this.userProfile.organization ? 'warning' : ''}"
+          >
+            <option ?selected="${!this.userProfile?.organization}" value="${null}">Select Organization</option>
+            ${this.userProfile?.organizations_available?.map(
+              (o: any) =>
+                html`<option ?selected="${this.userProfile?.organization?.id == o.id}" value="${o.id}">
+                  ${o.name}
+                </option>`
             )}
           </select>
 
@@ -300,6 +322,18 @@ export class AppShell extends LitElement {
               </a>
             </div>
           </fieldset>
+
+          <fieldset>
+            <legend class="larger-font">Access Management</legend>
+            <div class="apps-container">
+              <a href="/amp/">
+                <div class="app-wrapper">
+                  <div>${ampIcon}</div>
+                  <div class="app-name">Access Management Portal</div>
+                </div>
+              </a>
+            </div>
+          </fieldset>
         </div>
       </div>
       <div class="footer"></div>
@@ -324,6 +358,9 @@ export class AppShell extends LitElement {
   @query('select')
   countriesDropdown!: HTMLSelectElement;
 
+  @property({type: Boolean})
+  showLoading = false;
+
   async connectedCallback() {
     super.connectedCallback();
 
@@ -337,6 +374,21 @@ export class AppShell extends LitElement {
       if ([403, 401].includes(error.status)) {
         window.location.href = window.location.origin + '/login';
       }
+    }
+  }
+
+  protected onOrganizationChange(e: any) {
+    if (!e.target.value) {
+      return;
+    }
+
+    const selectedOrganizationId = parseInt(e.target.value, 10);
+
+    if (selectedOrganizationId !== this.userProfile.organization?.id) {
+      this.showLoading = true;
+
+      // send post request to change_organization endpoint
+      changeOrganization(String(selectedOrganizationId)).finally(() => window.location.reload());
     }
   }
 
@@ -362,10 +414,10 @@ export class AppShell extends LitElement {
     if (!this.showUserProfileView) {
       return;
     }
-    if (this._isInPath(e.path, 'id', 'profile')) {
+    if (this._isInPath(e.composedPath(), 'id', 'profile')) {
       return;
     }
-    if (!this._isInPath(e.path, 'id', 'user-dropdown')) {
+    if (!this._isInPath(e.composedPath(), 'id', 'user-dropdown')) {
       this.showUserProfileView = false;
     }
   }
@@ -404,14 +456,10 @@ export class AppShell extends LitElement {
     if (selVal == this.userProfile?.country?.id || !selVal) {
       return;
     }
-
-    changeCountry(selVal!)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((_error: any) => {
-        // TODO
-      });
+    this.showLoading = true;
+    changeCountry(selVal!).finally(() => {
+      window.location.reload();
+    });
   }
 
   _getSelectedCountryId() {

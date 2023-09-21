@@ -4,5 +4,8 @@ export const endpoints = {
   },
   changeCountry: {
     url: '/api/v3/users/changecountry/'
+  },
+  changeOrganization: {
+    url: '/api/v3/users/changeorganization/'
   }
 };
