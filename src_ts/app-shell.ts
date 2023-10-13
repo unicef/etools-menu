@@ -370,7 +370,7 @@ export class AppShell extends LitElement {
     try {
       this.userProfile = await getUserProfile();
       this.setAppsVisibility();
-    } catch (error) {
+    } catch (error: any) {
       if ([403, 401].includes(error.status)) {
         window.location.href = window.location.origin + '/login';
       }
