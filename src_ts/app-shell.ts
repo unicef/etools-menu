@@ -192,7 +192,6 @@ export class AppShell extends LitElement {
             style="margin-inline-start: 6px;"
             class="${!this.userProfile.organization ? 'warning' : ''}"
           >
-            <option ?selected="${!this.userProfile?.organization}" value="${null}">Select Organization</option>
             ${this.userProfile?.organizations_available?.map(
               (o: any) =>
                 html`<option ?selected="${this.userProfile?.organization?.id == o.id}" value="${o.id}">
@@ -384,7 +383,7 @@ export class AppShell extends LitElement {
 
     const selectedOrganizationId = parseInt(e.target.value, 10);
 
-    if (selectedOrganizationId !== this.userProfile.organization?.id) {
+    if (!isNaN(selectedOrganizationId) && selectedOrganizationId !== this.userProfile.organization?.id) {
       this.showLoading = true;
 
       // send post request to change_organization endpoint
