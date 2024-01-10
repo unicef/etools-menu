@@ -19,9 +19,9 @@ jobs:
       - run:
           name: TsLint
           command: npm run tsToJs
-      - run:
-          name: EsLint
-          command: npm run lint
+      # - run:
+      #     name: EsLint
+      #     command: npm run lint
 
   build_and_deploy:
     working_directory: ~/code

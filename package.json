@@ -11,7 +11,7 @@
   "repository": "https://github.com/unicef/etools-menu",
   "scripts": {
     "tsToJs": "tsc --skipLibCheck || true",
-    "tsEslint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
+    "lint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
     "build": "export NODE_OPTIONS=--max_old_space_size=4096 && rollup -c rollup-prod.config.js",
     "start": "rm -rf src && rollup -c rollup-dev.config.js -w"
   },
