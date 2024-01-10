@@ -1,4 +1,5 @@
-import {css, customElement, html, LitElement, property} from 'lit-element';
+import {css, html, LitElement} from 'lit';
+import {property, customElement} from 'lit/decorators.js';
 
 @customElement('user-profile-view')
 export class UserProfileView extends LitElement {
@@ -22,7 +23,7 @@ export class UserProfileView extends LitElement {
           padding-bottom: 26px;
         }
 
-        .paper-label {
+        .etools-label {
           font-size: 12px;
           color: var(--secondary-text-color);
           padding-top: 6px;
@@ -67,11 +68,11 @@ export class UserProfileView extends LitElement {
       <button id="x" type="button" @click="${this.close}">x</button>
       <div class="container">
         <div>
-          <div class="paper-label">Name</div>
+          <div class="etools-label">Name</div>
           <div class="input-label">${this.userProfile?.name}</div>
         </div>
         <div>
-          <div class="paper-label">Available Countries</div>
+          <div class="etools-label">Available Countries</div>
           <div class="input-label">
             ${this.userProfile?.countries_available?.map(
               (c: any, index: number) =>
@@ -80,7 +81,7 @@ export class UserProfileView extends LitElement {
           </div>
         </div>
         <div>
-          <div class="paper-label">My Groups</div>
+          <div class="etools-label">My Groups</div>
           <div class="input-label">
             ${this.userProfile?.groups?.map(
               (g: any, index: number) => g.name + (index == this.userProfile?.groups?.length - 1 ? '' : ' | ')

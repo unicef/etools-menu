@@ -12,17 +12,31 @@
   "scripts": {
     "tsToJs": "tsc --skipLibCheck || true",
     "tsEslint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
-    "start": "tsc --watch --preserveWatchOutput & polymer serve -H 0.0.0.0 -p 8080",
-    "build": "export NODE_OPTIONS=--max_old_space_size=4096 && npm run tsToJs && npm run build:static",
-    "build:static": "polymer build"
+    "build": "export NODE_OPTIONS=--max_old_space_size=4096 && rollup -c rollup-prod.config.js",
+    "start": "rm -rf src && rollup -c rollup-dev.config.js -w"
   },
   "dependencies": {
-    "@unicef-polymer/etools-loading": "^6.1.1",
+    "@shoelace-style/shoelace": "^2.10.0",
+    "@unicef-polymer/etools-unicef": "^1.0.0-rc.50",
     "dexie": "^3.0.1",
-    "lit-element": "^2.5.1"
+    "lit": "^2.7.5",
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "polymer-cli": "^1.9.11",
-    "typescript": "^4.5.4"
+    "@rollup/plugin-dynamic-import-vars": "^2.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^2.79.1",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-esbuild": "^6.1.0",
+    "rollup-plugin-filesize": "^9.1.2",
+    "rollup-plugin-license": "^3.2.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^2.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-workbox": "^8.0.1",
+    "typescript": "^4.9.5"
   }
 }
