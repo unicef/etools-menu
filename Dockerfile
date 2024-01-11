@@ -10,7 +10,7 @@ WORKDIR /tmp
 ADD package.json /tmp/
 ADD package-lock.json /tmp/
 
-RUN npm ci --only=prod
+RUN npm ci
 
 ADD . /code/
 WORKDIR /code
