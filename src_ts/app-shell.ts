@@ -198,6 +198,7 @@ export class AppShell extends LitElement {
         etools-dropdown::part(display-input) {
           text-align: right;
           color: var(--secondary-text-color);
+          font-weight: bold;
         }
 
         .header-subset {
@@ -236,7 +237,7 @@ export class AppShell extends LitElement {
       <etools-loading ?active="${this.showLoading}"></etools-loading>
       <div class="layout-h">
         <div class="unicefLogo">
-          <img id="unicefLogo" src="./images/UNICEF_logo.png" alt="UNICEF Logo" />
+          <img id="unicefLogo" src="./assets/images/UNICEF_logo.webp" alt="UNICEF Logo" />
         </div>
         <div class="header-container">
           <div class="header-subset">
@@ -278,7 +279,7 @@ export class AppShell extends LitElement {
             <img
               tabindex="0"
               id="profile"
-              src="./images/perm_identity-24px.svg"
+              src="./assets/images/perm_identity-24px.svg"
               @keydown="${this.callClickOnEnterAndSpace}"
               @click="${this.toggleUserProfileView}"
               alt="User Profile"
@@ -302,9 +303,9 @@ export class AppShell extends LitElement {
         </div>
       </div>
       <div class="logo">
-        <img id="app-logo" src="./images/eTools-logo-black.png" alt="eTools Logo" />
+        <img id="app-logo" src="./assets/images/eTools-logo-black.webp" alt="eTools Logo" />
       </div>
-      <div class="layout-h justify-center">
+      <div class="layout-h justify-center" ?hidden="${!this.userProfile}">
         <div class="content-container">
           <fieldset>
             <legend class="larger-font">Programme Management</legend>

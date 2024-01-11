@@ -40,14 +40,14 @@ Can be accessed at ./LICENSE.txt
     <meta name="apple-mobile-web-app-title" content="My App" />
 
     <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="assets/images/manifest/icon-48x48.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/manifest/icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="96x96" href="assets/images/manifest/icon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/manifest/icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/images/manifest/icon-192x192.png" />
 
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png" />
+    <meta name="msapplication-TileImage" content="assets/images/manifest/icon-144x144.png" />
     <meta name="msapplication-TileColor" content="#3f51b5" />
     <meta name="msapplication-tap-highlight" content="no" />
 
@@ -56,10 +56,11 @@ Can be accessed at ./LICENSE.txt
     <meta name="twitter:site" content="@username" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="eTools Apps Menu" />
-    <meta property="og:image" content="images/manifest/icon-144x144.png" />
+    <meta property="og:image" content="assets/images/manifest/icon-144x144.png" />
 
     <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <script>
       // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
@@ -70,6 +71,13 @@ Can be accessed at ./LICENSE.txt
         });
       }
     </script>
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap">
+    <link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic&display=swap">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/dist/themes/light.css"></noscript>
+    <link rel="preload" href="assets/css/app-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/app-theme.css"></noscript>
 
     <!-- Add any global styles for body, document, etc. -->
     <style>
@@ -126,6 +134,10 @@ Can be accessed at ./LICENSE.txt
         --secondary-text-color: rgba(0, 0, 0, 0.54);
       }
     </style>
+    <link rel="preload" as="image" href="./assets/images/etools-logo-color-white.svg" />
+    <link rel="preload" as="image" href="./assets/images/loading.svg" />
+    <link rel="preload" as="image" href="./assets/images/UNICEF_logo.webp" />
+    <link rel="preload" as="image" href="./assets/images/eTools-logo-black.webp" />
   </head>
   <body>
     <div id="buildRevNo" style="display: none">revNo</div>
@@ -133,12 +145,12 @@ Can be accessed at ./LICENSE.txt
     <app-shell appTitle="eTools Menu">
       <div id="loading-animation">
         <span>
-          <img src="images/etools-logo-color-white.svg" alt="UNICEF Logo" />
-          <img src="images/loading.svg" alt="loading animation" />
+          <img src="assets/images/etools-logo-color-white.svg" alt="UNICEF Logo" />
+          <img src="assets/images/loading.svg" alt="loading animation" />
         </span>
       </div>
     </app-shell>
     <noscript> Please enable JavaScript to view this website. </noscript>
-    <script type="module" src="src/app-shell.js"></script>
+    <script type="module" src="src/app-shell.js" async></script>
   </body>
 </html>

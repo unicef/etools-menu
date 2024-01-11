@@ -32,8 +32,11 @@ const copyConfig = {
   targets: [
     { src: 'manifest.json', dest: 'src' },
     { src: 'version.json', dest: 'src' },
-    { src: 'images', dest: 'src' },
     { src: 'assets', dest: 'src' },
+    {
+      src: 'node_modules/@unicef-polymer/etools-unicef/src/etools-icons/icons/**',
+      dest: 'src/node_modules/@unicef-polymer/etools-unicef/src/etools-icons/icons'
+    },
     { src: 'index.html', dest: 'src' }
   ]
 };
