@@ -25,7 +25,7 @@ import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparis
 import {setBasePath} from '@shoelace-style/shoelace';
 import {initializeIcons, EtoolsIconSet} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 
-setBasePath('/epd/');
+setBasePath('/menu/');
 initializeIcons([
   EtoolsIconSet.communication,
   EtoolsIconSet.device,
