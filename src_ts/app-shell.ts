@@ -17,12 +17,11 @@ import {
   unppIcon
 } from './app-selector-icons.js';
 import './user-profile-view.js';
-import Dexie from 'dexie';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
-import {setBasePath} from '@shoelace-style/shoelace';
+import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons, EtoolsIconSet} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 
 setBasePath('/menu/');
@@ -536,40 +535,5 @@ export class AppShell extends LitElement {
     changeCountry(selVal!).finally(() => {
       window.location.reload();
     });
-  }
-
-  clearDexieDbs() {
-    // except Chrome and Opera this method will delete only the dbs created with Dexie
-    Dexie.getDatabaseNames((dbsNames: string[]) => {
-      let dexieDbsNumber = dbsNames.length;
-      if (dexieDbsNumber > 0) {
-        dbsNames.forEach((dbName) => {
-          this.deleteDexieDb(dbName);
-        });
-      }
-    });
-  }
-
-  deleteDexieDb(dbName: string) {
-    let db = new Dexie(dbName);
-    let finished = false;
-    db.delete()
-      .catch(
-        function (err: any) {
-          console.log('Could not delete indexedDB: ' + dbName, 'etools-page-refresh-mixin', err, true);
-        }.bind(this)
-      )
-      .finally(
-        function () {
-          finished = true;
-        }.bind(this)
-      );
-    // *In Edge - catch and finally of db.delete() are not executed,
-    //            when the site is opened in more than one tab
-    setTimeout(() => {
-      if (!finished) {
-        alert('Please close any other tabs, that have this page open, for the Refresh to work properly.');
-      }
-    }, 9000);
   }
 }
