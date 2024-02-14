@@ -2,7 +2,6 @@ import {css, html, LitElement} from 'lit';
 import {property, query, customElement} from 'lit/decorators.js';
 import {changeCountry, changeOrganization, getUserProfile} from './api-requests.js';
 import {
-  adminIcon,
   ampIcon,
   apdIcon,
   dashIcon,
@@ -16,23 +15,17 @@ import {
   tripsIcon,
   unppIcon
 } from './app-selector-icons.js';
-import './user-profile-view.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
+import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
+import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
-import {initializeIcons, EtoolsIconSet} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
+import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 
 setBasePath('/menu/');
-initializeIcons([
-  EtoolsIconSet.communication,
-  EtoolsIconSet.device,
-  EtoolsIconSet.social,
-  EtoolsIconSet.av,
-  EtoolsIconSet.image,
-  EtoolsIconSet.maps
-]);
+initializeIcons();
 @customElement('app-shell')
 export class AppShell extends LitElement {
   static get styles() {
@@ -47,7 +40,14 @@ export class AppShell extends LitElement {
           padding-bottom: 4px;
           box-sizing: border-box;
           margin-left: auto;
+          color: var(--secondary-text-color);
+          --header-secondary-text-color: var(--secondary-text-color);
         }
+
+        .header-container a {
+          color: var(--secondary-text-color);
+        }
+
         .logo {
           text-align: center;
           padding-top: 8px;
@@ -61,10 +61,22 @@ export class AppShell extends LitElement {
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-          font-size: 12px;
+          font-size: var(--etools-font-size-12, 12px);
         }
 
         .apps-container > a {
+          width: 50%;
+        }
+
+        .cols-3 .apps-container > a {
+          width: 33.33%;
+        }
+
+        .cols-4 .apps-container > a {
+          width: 25%;
+        }
+
+        .cols-5 .apps-container > a {
           width: 20%;
         }
 
@@ -90,7 +102,7 @@ export class AppShell extends LitElement {
         .larger-font {
           color: var(--secondary-text-color);
           font-weight: bold;
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
         }
         .app-name {
           margin-top: 12px;
@@ -106,18 +118,11 @@ export class AppShell extends LitElement {
           border-style: solid;
           border-radius: 8px;
         }
-        img#profile {
-          border-radius: 50%;
-          padding: 6px;
-          width: 20px;
-          height: 20px;
+
+        #profile {
           margin-left: 25px;
-          position: relative;
-          cursor: pointer;
         }
-        img#profile:hover {
-          box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
-        }
+
         #app-logo {
           height: 65px;
         }
@@ -146,19 +151,16 @@ export class AppShell extends LitElement {
           padding-top: 6px;
           height: 50px;
         }
+
         *[hidden] {
           display: none;
-        }
-        img#profile:focus {
-          outline: none;
-          box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
         }
 
         etools-dropdown {
           border: none;
           color: var(--secondary-text-color);
           font-weight: bold;
-          font-size: 16px;
+          font-size: var(--etools-font-size-16, 16px);
           cursor: pointer;
         }
 
@@ -179,6 +181,11 @@ export class AppShell extends LitElement {
           padding-left: 4px;
           padding-top: 3px;
         }
+
+        .admin {
+          --etools-icon-font-size: 20px;
+        }
+
         .warning {
           border: 4px solid red;
         }
@@ -200,8 +207,17 @@ export class AppShell extends LitElement {
           font-weight: bold;
         }
 
+        etools-dropdown::part(form-control) {
+          padding-bottom: 4px;
+        }
+
         .header-subset {
           display: flex;
+          align-items: center;
+        }
+
+        etools-accesibility::part(icon) {
+          color: var(--secondary-text-color);
         }
 
         @media (max-width: 650px) {
@@ -212,7 +228,13 @@ export class AppShell extends LitElement {
 
         @media (max-width: 520px) {
           .apps-container > a {
-            width: 25%;
+            width: 50%;
+          }
+
+          .cols-3 .apps-container > a,
+          .cols-4 .apps-container > a,
+          .cols-5 .apps-container > a {
+            width: 33.33%;
           }
         }
 
@@ -222,7 +244,13 @@ export class AppShell extends LitElement {
           }
 
           .apps-container > a {
-            width: 33.33%;
+            width: 50%;
+          }
+
+          .cols-3 .apps-container > a,
+          .cols-4 .apps-container > a,
+          .cols-5 .apps-container > a {
+            width: 50%;
           }
         }
       `
@@ -275,26 +303,14 @@ export class AppShell extends LitElement {
           </div>
 
           <div class="header-subset">
-            <img
-              tabindex="0"
-              id="profile"
-              src="./assets/images/perm_identity-24px.svg"
-              @keydown="${this.callClickOnEnterAndSpace}"
-              @click="${this.toggleUserProfileView}"
-              alt="User Profile"
-            />
-            <user-profile-view
-              id="user-dropdown"
-              ?hidden="${!this.showUserProfileView}"
-              .userProfile="${this.userProfile}"
-              @keydown="${this.closeOnEsc}"
-              @close="${() => (this.showUserProfileView = false)}"
-            >
-            </user-profile-view>
+            <etools-profile-dropdown title="Profile and Sign out" .profile="${this.userProfile}">
+            </etools-profile-dropdown>
+
+            <etools-accesibility></etools-accesibility>
 
             <a href="/admin/" class="admin" ?hidden="${!this.userProfile?.is_superuser}">
               <div class="layout-h">
-                <div style="padding-top:4px;">${adminIcon}</div>
+                <etools-icon name="admin-icon" alt="Admin"></etools-icon>
                 <div class="admin-label larger-font">Admin</div>
               </div>
             </a>
@@ -305,7 +321,7 @@ export class AppShell extends LitElement {
         <img id="app-logo" src="./assets/images/eTools-logo-black.webp" alt="eTools Logo" />
       </div>
       <div class="layout-h justify-center" ?hidden="${!this.userProfile}">
-        <div class="content-container">
+        <div class="content-container cols-${this.totalColumns}">
           <fieldset>
             <legend class="larger-font">Programme Management</legend>
             <div class="apps-container">
@@ -436,6 +452,9 @@ export class AppShell extends LitElement {
   @property({type: Boolean})
   showLoading = false;
 
+  @property({type: Number})
+  totalColumns = 2;
+
   async connectedCallback() {
     super.connectedCallback();
 
@@ -472,6 +491,14 @@ export class AppShell extends LitElement {
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
     this.showMonitoringOrAssuranceApps =
       this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
+
+    if (this.userProfile?.is_unicef_user || (this.showAssuranceApps && this.showMonitoringApps)) {
+      this.totalColumns = 4;
+    }
+
+    if (this.showAssuranceApps && this.showMonitoringApps && this.userProfile?.is_unicef_user) {
+      this.totalColumns = 5;
+    }
   }
 
   getVisibilityByGroup(givenGroup: string) {
