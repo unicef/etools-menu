@@ -13,16 +13,23 @@
     "tsToJs": "tsc --skipLibCheck || true",
     "lint": "node_modules/eslint/bin/eslint.js 'src_ts/**/*.ts' --fix",
     "build": "export NODE_OPTIONS=--max_old_space_size=4096 && rollup -c rollup-prod.config.js",
-    "start": "rm -rf src && rollup -c rollup-dev.config.js -w"
+    "start": "rm -rf src && rollup -c rollup-dev.config.js -w",
+    "generate:icons": "npm --prefix node_modules/@unicef-polymer/etools-unicef run generate-icons -- --output=$(pwd)/assets/icons/ --icons=$(pwd)/assets/icons/icons.js",
+    "rd:init": "relative-deps init",
+    "rd:add": "relative-deps add",
+    "rd:reload": "relative-deps",
+    "rd:watch": "chokidar \"../../etools-polymer/**/*.js\" \"../../etools-polymer/**/**/*.js\" -c 'npm run rd:reload' --silent"
   },
   "dependencies": {
-    "@shoelace-style/shoelace": "^2.10.0",
-    "@unicef-polymer/etools-unicef": "^1.0.0-rc.50",
-    "dexie": "^3.0.1",
+    "@shoelace-style/shoelace": "^2.12.0",
+    "@unicef-polymer/etools-unicef": "^1.0.0-rc.64",
+    "@unicef-polymer/etools-utils": "^2.0.0-rc.6",
     "lit": "^2.7.5",
+    "relative-deps": "^1.0.7",
     "tslib": "^2.6.2"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-dynamic-import-vars": "^2.1.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-terser": "^0.4.4",
@@ -37,6 +44,10 @@
     "rollup-plugin-serve": "^2.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-workbox": "^8.0.1",
+    "svg-sprite": "^2.0.2",
     "typescript": "^4.9.5"
+  },
+  "relativeDependencies": {
+    
   }
 }

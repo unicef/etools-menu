@@ -1,6 +1,7 @@
 import esbuild from 'rollup-plugin-esbuild';
 import resolve from '@rollup/plugin-node-resolve';
 import path from 'path';
+import commonjs from '@rollup/plugin-commonjs';
 
 const importMetaUrlCurrentModulePlugin = () => {
   return {
@@ -17,9 +18,10 @@ const importMetaUrlCurrentModulePlugin = () => {
 const config = {
   input: 'src_ts/app-shell.ts',
   output: {
-    dir: 'src/src',
+    file: 'src/src/app-shell.js',
     format: 'es',
-    sourcemap: true
+    inlineDynamicImports: true,
+    sourcemap: true,
   },
   onwarn(warning, warn) {
     if (warning.code === 'THIS_IS_UNDEFINED') return;
@@ -28,7 +30,8 @@ const config = {
   plugins: [
     importMetaUrlCurrentModulePlugin(),
     resolve(),
-    esbuild()
+    esbuild(),
+    commonjs(),
   ],
   preserveEntrySignatures: false
 };

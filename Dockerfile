@@ -19,19 +19,17 @@ RUN cp -a /tmp/node_modules /code/node_modules
 
 # Necessary for circle ci
 WORKDIR /code
-RUN git submodule init && git submodule update --checkout
-
 RUN npm run build
-
 
 FROM node:14.21-alpine3.16 
 RUN apk update
 RUN apk add --update bash
 
 WORKDIR /code
-RUN npm install express --no-save
-RUN npm install compression --no-save
-RUN npm install browser-capabilities@1.1.x --no-save
+RUN npm init -y
+RUN npm install express
+RUN npm install compression
+RUN npm install browser-capabilities@1.1.x
 COPY --from=builder /code/express.js /code/express.js
 COPY --from=builder /code/src /code/src
 EXPOSE 8080
