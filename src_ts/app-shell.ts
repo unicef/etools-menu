@@ -18,7 +18,6 @@ import {
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
-import '@unicef-polymer/etools-unicef/src/etools-accesibility/etools-accesibility';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
@@ -305,8 +304,6 @@ export class AppShell extends LitElement {
           <div class="header-subset">
             <etools-profile-dropdown title="Profile and Sign out" .profile="${this.userProfile}">
             </etools-profile-dropdown>
-
-            <etools-accesibility></etools-accesibility>
 
             <a href="/admin/" class="admin" ?hidden="${!this.userProfile?.is_superuser}">
               <div class="layout-h">
