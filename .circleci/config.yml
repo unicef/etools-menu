@@ -1,10 +1,10 @@
-version: 2.1
+version: 2
 jobs:
   lint:
     working_directory: ~/code
     # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:12.22.7
+      - image: node:14.21
     steps:
       - checkout
       - restore_cache:
@@ -17,15 +17,16 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Polymer3 Build
-          command: npm run build
-          no_output_timeout: 25m
+          name: TsLint
+          command: npm run tsToJs
+      # - run:
+      #     name: EsLint
+      #     command: npm run lint
 
   build_and_deploy:
     working_directory: ~/code
-    # The primary container is an instance of the first list image listed. Your build commands run in this container.
     docker:
-      - image: node:12.22.7
+      - image: node:14.21
     steps:
       - checkout
       - setup_remote_docker
@@ -34,8 +35,10 @@ jobs:
           command: |
             REVNO=${CIRCLE_SHA1}
             BUILDDATE=$(date -u +%F_%T)
-            sed -i "0,/revNo/s//$REVNO/" package.json
-            sed -i "0,/bDate/s//$BUILDDATE/" package.json
+            sed -i "0,/revNo/s//$REVNO/" index.html
+            sed -i "0,/revNo/s//$REVNO/" version.json
+            sed -i "0,/bDate/s//$BUILDDATE/" version.json
+            sed -i "0,/bDate/s//$BUILDDATE/" index.html
       - run:
           name: Install Docker client
           command: |
@@ -47,7 +50,6 @@ jobs:
           # build and push Docker image
       - run:
           name: Building the image
-          no_output_timeout: 25m
           command: |
             TAG=${CIRCLE_BRANCH}
             docker build -t unicef/etools-menu:$TAG .
@@ -59,20 +61,23 @@ jobs:
             docker push unicef/etools-menu:$TAG
 
 workflows:
-  version: 2.1
-  build_and_lint:
+  version: 2
+  lint_and_build:
     jobs:
       - lint:
           filters:
             branches:
               ignore:
-                - main
+                - master
                 - staging
                 - develop
       - build_and_deploy:
+          requires:
+            - lint
           filters:
             branches:
               only:
-                - main
+                - master
                 - staging
                 - develop
+                - shoelace-migration
