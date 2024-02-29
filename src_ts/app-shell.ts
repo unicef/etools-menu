@@ -302,7 +302,11 @@ export class AppShell extends LitElement {
           </div>
 
           <div class="header-subset">
-            <etools-profile-dropdown title="Profile and Sign out" .profile="${this.userProfile}">
+            <etools-profile-dropdown
+              title="Profile and Sign out"
+              .profile="${this.userProfile}"
+              @sign-out="${this.signOut}"
+            >
             </etools-profile-dropdown>
 
             <a href="/admin/" class="admin" ?hidden="${!this.userProfile?.is_superuser}">
@@ -559,5 +563,15 @@ export class AppShell extends LitElement {
     changeCountry(selVal!).finally(() => {
       window.location.reload();
     });
+  }
+
+  protected signOut(): void {
+    // this._clearDexieDbs();
+    this.clearLocalStorage();
+    window.location.href = window.location.origin + '/social/unicef-logout/';
+  }
+
+  protected clearLocalStorage() {
+    localStorage.clear();
   }
 }
