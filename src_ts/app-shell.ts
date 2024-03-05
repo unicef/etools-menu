@@ -192,7 +192,7 @@ export class AppShell extends LitElement {
         #countrySelector {
           max-width: 160px;
           min-width: 120px;
-          margin-right: 5px;
+          margin-inline-end: 10px;
         }
 
         #organizationSelector {
@@ -267,38 +267,44 @@ export class AppShell extends LitElement {
         </div>
         <div class="header-container">
           <div class="header-subset">
-            <etools-dropdown
-              id="countrySelector"
-              class="w100"
-              .selected="${this.userProfile?.country?.id}"
-              placeholder="Country"
-              allow-outside-scroll
-              no-label-float
-              .options="${this.userProfile?.countries_available}"
-              option-label="name"
-              option-value="id"
-              trigger-value-change-event
-              @etools-selected-item-changed="${this.countryChanged}"
-              .shownOptionsLimit="${280}"
-              hide-search
-              .autoWidth="${true}"
-            ></etools-dropdown>
-
-            <etools-dropdown
-              ?hidden=${isEmptyObject(this.userProfile?.organizations_available)}
-              id="organizationSelector"
-              placeholder="Organization"
-              class="w100"
-              .selected="${this.userProfile?.organization?.id}"
-              allow-outside-scroll
-              no-label-float
-              .options="${this.userProfile?.organizations_available}"
-              option-label="name"
-              option-value="id"
-              trigger-value-change-event
-              @etools-selected-item-changed="${this.onOrganizationChange}"
-              hide-search
-            ></etools-dropdown>
+            <div id="countrySelector">
+              <etools-dropdown
+                class="w100"
+                .selected="${this.userProfile?.country?.id}"
+                placeholder="Country"
+                allow-outside-scroll
+                no-label-float
+                .options="${this.userProfile?.countries_available}"
+                option-label="name"
+                option-value="id"
+                trigger-value-change-event
+                @etools-selected-item-changed="${this.countryChanged}"
+                .shownOptionsLimit="${280}"
+                hide-search
+                min-width="160px"
+                placement="bottom-end"
+                .syncWidth="${false}"
+              ></etools-dropdown>
+            </div>
+            <div id="organizationSelector">
+              <etools-dropdown
+                ?hidden=${isEmptyObject(this.userProfile?.organizations_available)}
+                placeholder="Organization"
+                class="w100"
+                .selected="${this.userProfile?.organization?.id}"
+                allow-outside-scroll
+                no-label-float
+                .options="${this.userProfile?.organizations_available}"
+                option-label="name"
+                option-value="id"
+                trigger-value-change-event
+                @etools-selected-item-changed="${this.onOrganizationChange}"
+                hide-search
+                min-width="180px"
+                placement="bottom-end"
+                .syncWidth="${false}"
+              ></etools-dropdown>
+            </div>
           </div>
 
           <div class="header-subset">
