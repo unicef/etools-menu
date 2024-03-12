@@ -173,7 +173,7 @@ export class AppShell extends LitElement {
         }
 
         .admin {
-          margin: 0 15px 0 25px;
+          margin: 0 15px 0 10px;
         }
 
         .admin-label {
@@ -191,13 +191,11 @@ export class AppShell extends LitElement {
 
         #countrySelector {
           max-width: 160px;
-          min-width: 120px;
           margin-inline-end: 10px;
         }
 
         #organizationSelector {
           max-width: 160px;
-          min-width: 120px;
         }
 
         etools-dropdown::part(display-input) {
@@ -300,7 +298,7 @@ export class AppShell extends LitElement {
                 trigger-value-change-event
                 @etools-selected-item-changed="${this.onOrganizationChange}"
                 hide-search
-                min-width="180px"
+                min-width="160px"
                 placement="bottom-end"
                 .syncWidth="${false}"
               ></etools-dropdown>
