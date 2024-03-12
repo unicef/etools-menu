@@ -173,7 +173,7 @@ export class AppShell extends LitElement {
         }
 
         .admin {
-          margin: 0 15px 0 25px;
+          margin: 0 15px 0 10px;
         }
 
         .admin-label {
