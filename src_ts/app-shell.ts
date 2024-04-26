@@ -513,7 +513,7 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showLastMile = this.getVisibilityByGroup('IP LM Editor');
+    this.showLastMile =  this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
 
     if (!this.userProfile?.is_unicef_user) {
