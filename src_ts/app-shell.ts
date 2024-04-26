@@ -432,7 +432,7 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-          <fieldset ?hidden="${!this.hasVisibilityByPartnerGroups}">
+          <fieldset ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups}">
             <legend class="larger-font">Access Management</legend>
             <div class="apps-container">
               <a href="/amp/">
