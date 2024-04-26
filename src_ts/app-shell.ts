@@ -13,7 +13,8 @@ import {
   pseaIcon,
   tpmIcon,
   tripsIcon,
-  unppIcon
+  unppIcon,
+  lastMileIcon
 } from './app-selector-icons.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
@@ -77,6 +78,10 @@ export class AppShell extends LitElement {
 
         .cols-5 .apps-container > a {
           width: 20%;
+        }
+
+        .cols-6 .apps-container > a {
+          width: 16.66%;
         }
 
         .layout-h {
@@ -230,7 +235,8 @@ export class AppShell extends LitElement {
 
           .cols-3 .apps-container > a,
           .cols-4 .apps-container > a,
-          .cols-5 .apps-container > a {
+          .cols-5 .apps-container > a,
+          .cols-6 .apps-container > a {
             width: 33.33%;
           }
         }
@@ -246,7 +252,8 @@ export class AppShell extends LitElement {
 
           .cols-3 .apps-container > a,
           .cols-4 .apps-container > a,
-          .cols-5 .apps-container > a {
+          .cols-5 .apps-container > a,
+          .cols-6 .apps-container > a {
             width: 50%;
           }
         }
@@ -342,7 +349,7 @@ export class AppShell extends LitElement {
                   <div class="app-name">Partnership Management</div>
                 </div>
               </a>
-              <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member}">
+              <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member || !this.hasVisibilityByPartnerGroups}">
                 <div class="app-wrapper">
                   <div>${pmpIcon}</div>
                   <div class="app-name">ePD</div>
@@ -384,6 +391,12 @@ export class AppShell extends LitElement {
                   <div class="app-name">Field Monitoring</div>
                 </div>
               </a>
+              <a href="/lastmile/" ?hidden="${!this.showLastMile}">
+              <div class="app-wrapper">
+                <div>${lastMileIcon}</div>
+                <div class="app-name">Last Mile</div>
+              </div>
+            </a>
             </div>
           </fieldset>
 
@@ -419,7 +432,7 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset ?hidden="${!this.hasVisibilityByPartnerGroups}">
             <legend class="larger-font">Access Management</legend>
             <div class="apps-container">
               <a href="/amp/">
@@ -444,6 +457,12 @@ export class AppShell extends LitElement {
 
   @property({type: Boolean})
   showMonitoringApps = true;
+
+  @property({type: Boolean})
+  showLastMile = false;
+
+  @property({type: Boolean})
+  hasVisibilityByPartnerGroups = false;
 
   @property({type: Boolean})
   showMonitoringOrAssuranceApps = true;
@@ -494,15 +513,24 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
+    this.showLastMile =  this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
+    this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
+
+    if (!this.userProfile?.is_unicef_user) {
+      if (this.showLastMile && (this.showAssuranceApps || this.showMonitoringApps)) {
+        this.totalColumns = 3;
+      }
+    }
+
     this.showMonitoringOrAssuranceApps =
-      this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user;
+      this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user || this.showLastMile;
 
     if (this.userProfile?.is_unicef_user || (this.showAssuranceApps && this.showMonitoringApps)) {
-      this.totalColumns = 4;
+      this.totalColumns = this.showLastMile ? 5 : 4;
     }
 
     if (this.showAssuranceApps && this.showMonitoringApps && this.userProfile?.is_unicef_user) {
-      this.totalColumns = 5;
+      this.totalColumns = this.showLastMile ? 6 : 5;
     }
   }
 
@@ -511,6 +539,11 @@ export class AppShell extends LitElement {
       return this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === givenGroup);
     }
     return true;
+  }
+
+  getVisibilityByPartnerGroups() {
+    const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer']
+    return this.userProfile?.groups?.some((g: {id: number; name: string}) => partnersGroups.includes(g.name));
   }
 
   toggleUserProfileView() {
