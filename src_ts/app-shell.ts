@@ -349,7 +349,10 @@ export class AppShell extends LitElement {
                   <div class="app-name">Partnership Management</div>
                 </div>
               </a>
-              <a href="/epd/" ?hidden="${!this.userProfile?._partner_staff_member || !this.hasVisibilityByPartnerGroups}">
+              <a
+                href="/epd/"
+                ?hidden="${!this.userProfile?._partner_staff_member || !this.hasVisibilityByPartnerGroups}"
+              >
                 <div class="app-wrapper">
                   <div>${pmpIcon}</div>
                   <div class="app-name">ePD</div>
@@ -392,11 +395,11 @@ export class AppShell extends LitElement {
                 </div>
               </a>
               <a href="/lastmile/" ?hidden="${!this.showLastMile}">
-              <div class="app-wrapper">
-                <div>${lastMileIcon}</div>
-                <div class="app-name">Last Mile</div>
-              </div>
-            </a>
+                <div class="app-wrapper">
+                  <div>${lastMileIcon}</div>
+                  <div class="app-name">Last Mile Supply Monitoring</div>
+                </div>
+              </a>
             </div>
           </fieldset>
 
