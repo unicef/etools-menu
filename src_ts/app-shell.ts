@@ -9,7 +9,6 @@ import {
   famIcon,
   fmIcon,
   pmpIcon,
-  powerBiIcon,
   pseaIcon,
   tpmIcon,
   tripsIcon,
@@ -416,14 +415,6 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper">
                   <div>${dashIcon}</div>
                   <div class="app-name">Dashboards</div>
-                </div>
-              </a>
-              <a
-                href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/5e60ab16-cce5-4c21-8620-de0c4c6415de/ReportSectionfe8562e6ef8c4eddcb52"
-              >
-                <div class="app-wrapper">
-                  <div>${powerBiIcon}</div>
-                  <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div>
                 </div>
               </a>
               <a href="https://datamart.unicef.io/">
