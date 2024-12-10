@@ -507,7 +507,7 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showLastMile =  this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
+    this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
 
     if (!this.userProfile?.is_unicef_user) {
@@ -536,7 +536,7 @@ export class AppShell extends LitElement {
   }
 
   getVisibilityByPartnerGroups() {
-    const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer']
+    const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer'];
     return this.userProfile?.groups?.some((g: {id: number; name: string}) => partnersGroups.includes(g.name));
   }
 
