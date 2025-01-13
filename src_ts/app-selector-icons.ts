@@ -167,7 +167,6 @@ export const lastMileIcon = html`<svg width="45" height="45" viewBox="0 0 2413 2
   </g>
 </svg>`;
 
-
 export const pseaIcon = html`<svg height="45" viewBox="0 0 72 72" width="45">
   <g id="pseaIcon">
     <polygon id="Shape" fill="#0099ff" points="0 0 72 0 72 72 0 72"></polygon>
