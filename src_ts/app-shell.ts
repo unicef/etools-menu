@@ -493,6 +493,11 @@ export class AppShell extends LitElement {
 
     try {
       this.userProfile = await getUserProfile();
+      // set language based on user preferences
+      const userLanguage = this.userProfile?.preferences?.language;
+      if (userLanguage && translations[userLanguage]) {
+        this.language = userLanguage;
+      }
       this.setAppsVisibility();
     } catch (error: any) {
       if ([403, 401].includes(error.status)) {
