@@ -19,9 +19,18 @@ import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
+import translations from '../assets/translations';
+
+declare global {
+  interface Window {
+    EtoolsLanguage: string;
+  }
+}
 
 setBasePath('/menu/');
 initializeIcons();
@@ -363,7 +372,7 @@ export class AppShell extends LitElement {
           <fieldset ?hidden="${!this.showMonitoringOrAssuranceApps}">
             <legend class="larger-font">Monitoring & Assurance</legend>
             <div class="apps-container">
-              <a href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
+              <a @click="${this.goToPageWithConfirm}" href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
                 <div class="app-wrapper">
                   <div>${tripsIcon}</div>
                   <div class="app-name">Trip Management</div>
@@ -443,6 +452,9 @@ export class AppShell extends LitElement {
     `;
   }
 
+  @property({type: String, attribute: 'language'})
+  language: string = window.EtoolsLanguage || 'en';
+
   @property({type: Object})
   userProfile?: any;
 
@@ -501,6 +513,38 @@ export class AppShell extends LitElement {
 
       // send post request to change_organization endpoint
       changeOrganization(String(selectedOrganizationId)).finally(() => window.location.reload());
+    }
+  }
+
+  goToPageWithConfirm(e: any) {
+    const path: string = (e.target! as HTMLElement).closest('a')?.getAttribute('href') || '';
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    openDialog({
+      dialog: 'are-you-sure',
+      dialogData: {
+        content: this.getTranslation(this.language, 'CONFIRM_NAVIGATE_TO_TRIP'),
+        confirmBtnText: this.getTranslation(this.language, 'CONTINUE'),
+        cancelBtnText: this.getTranslation(this.language, 'CANCEL')
+      }
+    }).then(({confirmed}) => {
+      if (confirmed) {
+        if (e.ctrlKey || e.metaKey) {
+          window!.open(path, '_blank')!.focus();
+        } else {
+          window.location.href = path;
+        }
+      }
+    });
+  }
+
+  getTranslation(lang: string, key: string) {
+    try {
+      return translations[lang][key];
+    } catch (err) {
+      console.log(err);
+      return translations.en[key];
     }
   }
 
