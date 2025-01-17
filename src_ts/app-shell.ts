@@ -9,7 +9,6 @@ import {
   famIcon,
   fmIcon,
   pmpIcon,
-  powerBiIcon,
   pseaIcon,
   tpmIcon,
   tripsIcon,
@@ -20,9 +19,18 @@ import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
 import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
+import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
+import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
+import translations from '../assets/translations';
+
+declare global {
+  interface Window {
+    EtoolsLanguage: string;
+  }
+}
 
 setBasePath('/menu/');
 initializeIcons();
@@ -364,7 +372,7 @@ export class AppShell extends LitElement {
           <fieldset ?hidden="${!this.showMonitoringOrAssuranceApps}">
             <legend class="larger-font">Monitoring & Assurance</legend>
             <div class="apps-container">
-              <a href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
+              <a @click="${this.goToPageWithConfirm}" href="/t2f/" ?hidden="${!this.userProfile?.is_unicef_user}">
                 <div class="app-wrapper">
                   <div>${tripsIcon}</div>
                   <div class="app-name">Trip Management</div>
@@ -418,14 +426,6 @@ export class AppShell extends LitElement {
                   <div class="app-name">Dashboards</div>
                 </div>
               </a>
-              <a
-                href="https://app.powerbi.com/groups/me/apps/2c83563f-d6fc-4ade-9c10-bbca57ed1ece/reports/5e60ab16-cce5-4c21-8620-de0c4c6415de/ReportSectionfe8562e6ef8c4eddcb52"
-              >
-                <div class="app-wrapper">
-                  <div>${powerBiIcon}</div>
-                  <div class="app-name">Implementation Intelligence (I<sup>2</sup>)</div>
-                </div>
-              </a>
               <a href="https://datamart.unicef.io/">
                 <div class="app-wrapper">
                   <div>${datamartIcon}</div>
@@ -451,6 +451,9 @@ export class AppShell extends LitElement {
       <div class="footer"></div>
     `;
   }
+
+  @property({type: String, attribute: 'language'})
+  language: string = window.EtoolsLanguage || 'en';
 
   @property({type: Object})
   userProfile?: any;
@@ -490,6 +493,11 @@ export class AppShell extends LitElement {
 
     try {
       this.userProfile = await getUserProfile();
+      // set language based on user preferences
+      const userLanguage = this.userProfile?.preferences?.language;
+      if (userLanguage && translations[userLanguage]) {
+        this.language = userLanguage;
+      }
       this.setAppsVisibility();
     } catch (error: any) {
       if ([403, 401].includes(error.status)) {
@@ -513,10 +521,42 @@ export class AppShell extends LitElement {
     }
   }
 
+  goToPageWithConfirm(e: any) {
+    const path: string = (e.target! as HTMLElement).closest('a')?.getAttribute('href') || '';
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    openDialog({
+      dialog: 'are-you-sure',
+      dialogData: {
+        content: this.getTranslation(this.language, 'CONFIRM_NAVIGATE_TO_TRIP'),
+        confirmBtnText: this.getTranslation(this.language, 'CONTINUE'),
+        cancelBtnText: this.getTranslation(this.language, 'CANCEL')
+      }
+    }).then(({confirmed}) => {
+      if (confirmed) {
+        if (e.ctrlKey || e.metaKey) {
+          window!.open(path, '_blank')!.focus();
+        } else {
+          window.location.href = path;
+        }
+      }
+    });
+  }
+
+  getTranslation(lang: string, key: string) {
+    try {
+      return translations[lang][key];
+    } catch (err) {
+      console.log(err);
+      return translations.en[key];
+    }
+  }
+
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showLastMile =  this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
+    this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
 
     if (!this.userProfile?.is_unicef_user) {
@@ -545,7 +585,7 @@ export class AppShell extends LitElement {
   }
 
   getVisibilityByPartnerGroups() {
-    const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer']
+    const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer'];
     return this.userProfile?.groups?.some((g: {id: number; name: string}) => partnersGroups.includes(g.name));
   }
 
