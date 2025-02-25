@@ -9,6 +9,7 @@ import {
   famIcon,
   fmIcon,
   pmpIcon,
+  gPDIcon,
   pseaIcon,
   tpmIcon,
   tripsIcon,
@@ -366,6 +367,12 @@ export class AppShell extends LitElement {
                   <div class="app-name">ePD</div>
                 </div>
               </a>
+              <a href="/government/" ?hidden="${!this.showGPD(this.userProfile)}">
+                <div class="app-wrapper">
+                  <div>${gPDIcon}</div>
+                  <div class="app-name">gPD</div>
+                </div>
+              </a>
             </div>
           </fieldset>
 
@@ -563,6 +570,13 @@ export class AppShell extends LitElement {
       if (this.showLastMile && (this.showAssuranceApps || this.showMonitoringApps)) {
         this.totalColumns = 3;
       }
+      if (
+        this.showGPD(this.userProfile) &&
+        this.userProfile?._partner_staff_member &&
+        this.hasVisibilityByPartnerGroups
+      ) {
+        this.totalColumns = 3;
+      }
     }
 
     this.showMonitoringOrAssuranceApps =
@@ -587,6 +601,10 @@ export class AppShell extends LitElement {
   getVisibilityByPartnerGroups() {
     const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer'];
     return this.userProfile?.groups?.some((g: {id: number; name: string}) => partnersGroups.includes(g.name));
+  }
+
+  showGPD(userProfile: any) {
+    return !userProfile.is_unicef_user && userProfile.show_gpd && userProfile.organization?.is_government;
   }
 
   toggleUserProfileView() {
