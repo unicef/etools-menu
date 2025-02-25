@@ -44,7 +44,7 @@ export const gPDIcon = html`<svg
   xml:space="preserve"
   stroke="#ffffff"
   transform="matrix(-1, 0, 0, 1, 0, 0)"
-  stroke-width="0.00057"
+  stroke-width="0.17099999999999999"
 >
   <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
     <rect x="-14.25" y="-14.25" width="85.50" height="85.50" rx="0" fill="#009B56" strokewidth="0"></rect>
