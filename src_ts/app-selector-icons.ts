@@ -36,6 +36,29 @@ export const pmpIcon = html` <svg height="45" viewBox="0 0 72 72" width="45">
   </g>
 </svg>`;
 
+export const gPDIcon = html`<svg
+  width="45px"
+  height="45px"
+  viewBox="-4.2 -4.2 22.40 22.40"
+  id="gPDIcon"
+  fill="#ffffff"
+  stroke="#ffffff"
+>
+  <g id="SVGRepo_bgCarrier" stroke-width="0">
+    <rect x="-4.2" y="-4.2" width="22.40" height="22.40" rx="11.2" fill="#009B56" strokewidth="0"></rect>
+  </g>
+  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+  <g id="SVGRepo_iconCarrier">
+    <defs id="defs6"></defs>
+    <rect width="14" height="14" x="0" y="0" id="canvas" style="fill:none;stroke:none;visibility:hidden"></rect>
+    <path
+      d="M 7,0 C 6.75,0.0032 6.5,0.1644239 6.5,0.5 l 0,4.03125 C 3.906144,4.6951647 3,6.060613 3,7 l 8,0 C 11,6.060613 10.093856,4.6951647 7.5,4.53125 L 7.5,0.5 C 7.5,0.1516409 7.25,-0.0031957 7,0 z M 8,0 8,3 12,3 10,1.5 12,0 8,0 z m -7,8 0,1 1,0 0,4 -1,0 -1,1 14,0 -1,-1 -1,0 0,-4 1,0 0,-1 -12,0 z m 3,1 1,0 0,4 -1,0 0,-4 z m 2,0 2,0 0,4 -2,0 0,-4 z m 3,0 1,0 0,4 -1,0 0,-4 z"
+      id="government"
+      style="fill:#ffffff;fill-opacity:1;stroke:none"
+    ></path>
+  </g>
+</svg>`;
+
 export const tripsIcon = html`<svg height="45" viewBox="0 0 72 72" width="45">
   <g id="tripsIcon">
     <polygon id="tripShape" fill="#0061E9" points="0,0 72,0 72,72 0,72     " />
