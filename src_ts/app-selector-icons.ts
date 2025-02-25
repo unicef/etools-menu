@@ -36,6 +36,49 @@ export const pmpIcon = html` <svg height="45" viewBox="0 0 72 72" width="45">
   </g>
 </svg>`;
 
+export const gPDIcon = html`<svg
+  fill="#ffffff"
+  height="45px"
+  width="45px"
+  viewBox="-14.25 -14.25 85.50 85.50"
+  xml:space="preserve"
+  stroke="#ffffff"
+  transform="matrix(-1, 0, 0, 1, 0, 0)"
+  stroke-width="0.00057"
+>
+  <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+    <rect x="-14.25" y="-14.25" width="85.50" height="85.50" rx="0" fill="#009B56" strokewidth="0"></rect>
+  </g>
+  <g
+    id="SVGRepo_tracerCarrier"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke="#fffafa"
+    stroke-width="0.11400000000000002"
+  ></g>
+  <g id="SVGRepo_iconCarrier">
+    <g>
+      <g>
+        <path
+          d="M56.555,39.168L51,35.465V25c0-0.553-0.448-1-1-1h-4v-4c0-0.553-0.448-1-1-1h-8.056c-0.453-4.32-3.805-7.716-7.944-7.973 V9h6c0.552,0,1-0.447,1-1V3c0-0.553-0.448-1-1-1h-6h-1h-1v1v5v3.149c-3.669,0.696-6.528,3.885-6.944,7.851H12 c-0.552,0-1,0.447-1,1v4H7c-0.552,0-1,0.447-1,1v10.465l-5.555,3.703C0.167,39.354,0,39.666,0,40v14c0,0.553,0.448,1,1,1h6h6h4h5 h4h5h4h5h4h6h6c0.552,0,1-0.447,1-1V40C57,39.666,56.833,39.354,56.555,39.168z M29,4h5v3h-5V4z M28.5,13 c3.268,0,5.973,2.614,6.426,6H22.074C22.527,15.614,25.232,13,28.5,13z M13,21h31v3H13V21z M2,40.535l4-2.667V53H2V40.535z M8,36 V26h4h33h4v10v17h-4V39c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v14h-3V39c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v14h-3 V39c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v14h-3V39c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v14H8V36z M14,53V40h2v13 H14z M23,53V40h2v13H23z M32,53V40h2v13H32z M41,53V40h2v13H41z M55,53h-4V37.868l4,2.667V53z"
+        ></path>
+        <path
+          d="M13,35h4c0.552,0,1-0.447,1-1v-4c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v4C12,34.553,12.448,35,13,35z M14,31h2v2 h-2V31z"
+        ></path>
+        <path
+          d="M22,35h4c0.552,0,1-0.447,1-1v-4c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v4C21,34.553,21.448,35,22,35z M23,31h2v2 h-2V31z"
+        ></path>
+        <path
+          d="M31,35h4c0.552,0,1-0.447,1-1v-4c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v4C30,34.553,30.448,35,31,35z M32,31h2v2 h-2V31z"
+        ></path>
+        <path
+          d="M40,35h4c0.552,0,1-0.447,1-1v-4c0-0.553-0.448-1-1-1h-4c-0.552,0-1,0.447-1,1v4C39,34.553,39.448,35,40,35z M41,31h2v2 h-2V31z"
+        ></path>
+      </g>
+    </g>
+  </g>
+</svg>`;
+
 export const tripsIcon = html`<svg height="45" viewBox="0 0 72 72" width="45">
   <g id="tripsIcon">
     <polygon id="tripShape" fill="#0061E9" points="0,0 72,0 72,72 0,72     " />
