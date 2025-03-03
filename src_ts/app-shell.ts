@@ -604,6 +604,9 @@ export class AppShell extends LitElement {
   }
 
   showGPD(userProfile: any) {
+    if (!userProfile) {
+      return false;
+    }
     return !userProfile.is_unicef_user && userProfile.show_gpd && userProfile.organization?.is_government;
   }
 
