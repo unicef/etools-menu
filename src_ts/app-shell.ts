@@ -10,7 +10,6 @@ import {
   fmIcon,
   pmpIcon,
   gPDIcon,
-  pseaIcon,
   tpmIcon,
   tripsIcon,
   unppIcon,
@@ -395,12 +394,6 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper">
                   <div>${famIcon}</div>
                   <div class="app-name">Financial Assurance</div>
-                </div>
-              </a>
-              <a href="/psea/" ?hidden="${!this.showAssuranceApps}">
-                <div class="app-wrapper">
-                  <div>${pseaIcon}</div>
-                  <div class="app-name">PSEA Assurance</div>
                 </div>
               </a>
               <a href="/fm/" ?hidden="${!this.showMonitoringApps}">
