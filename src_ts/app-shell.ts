@@ -485,6 +485,12 @@ export class AppShell extends LitElement {
   @property({type: Number})
   totalColumns = 2;
 
+  @property({type: Number})
+  minColumns = 2;
+
+  @property({type: Number})
+  maxColumns = 6;
+
   async connectedCallback() {
     super.connectedCallback();
 
@@ -553,35 +559,22 @@ export class AppShell extends LitElement {
     }
   }
 
+  updated() {
+    const totalColumns = Math.max(
+      ...Array.from(this.renderRoot.querySelectorAll('fieldset:not([hidden])')).map(
+        (x: any) => x.querySelectorAll('a:not([hidden])').length
+      )
+    );
+    this.totalColumns = Math.min(this.maxColumns, Math.max(this.minColumns, totalColumns));
+  }
+
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
     this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
-
-    if (!this.userProfile?.is_unicef_user) {
-      if (this.showLastMile && (this.showAssuranceApps || this.showMonitoringApps)) {
-        this.totalColumns = 3;
-      }
-      if (
-        this.showGPD(this.userProfile) &&
-        this.userProfile?._partner_staff_member &&
-        this.hasVisibilityByPartnerGroups
-      ) {
-        this.totalColumns = 3;
-      }
-    }
-
     this.showMonitoringOrAssuranceApps =
       this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user || this.showLastMile;
-
-    if (this.userProfile?.is_unicef_user || (this.showAssuranceApps && this.showMonitoringApps)) {
-      this.totalColumns = this.showLastMile ? 5 : 4;
-    }
-
-    if (this.showAssuranceApps && this.showMonitoringApps && this.userProfile?.is_unicef_user) {
-      this.totalColumns = this.showLastMile ? 6 : 5;
-    }
   }
 
   getVisibilityByGroup(givenGroup: string) {
