@@ -1,5 +1,5 @@
 import {css, html, LitElement} from 'lit';
-import {property, query, customElement} from 'lit/decorators.js';
+import {customElement, property, query} from 'lit/decorators.js';
 import {changeCountry, changeOrganization, getUserProfile} from './api-requests.js';
 import {
   ampIcon,
@@ -8,12 +8,13 @@ import {
   datamartIcon,
   famIcon,
   fmIcon,
-  pmpIcon,
   gPDIcon,
+  lastMileIcon,
+  pmpIcon,
+  prpIcon,
   tpmIcon,
   tripsIcon,
-  unppIcon,
-  lastMileIcon
+  unppIcon
 } from './app-selector-icons.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
@@ -21,6 +22,7 @@ import '@unicef-polymer/etools-unicef/src/etools-icons/etools-icon';
 import '@unicef-polymer/etools-unicef/src/etools-profile-dropdown/etools-profile-dropdown';
 import '@unicef-polymer/etools-modules-common/dist/layout/are-you-sure';
 import {openDialog} from '@unicef-polymer/etools-utils/dist/dialog.util';
+import {Environment} from '@unicef-polymer/etools-utils/dist/singleton/environment';
 import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparisons.util';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
@@ -370,6 +372,12 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper">
                   <div>${gPDIcon}</div>
                   <div class="app-name">gPD</div>
+                </div>
+              </a>
+              <a href="${Environment.getHost('prp')}">
+                <div class="app-wrapper">
+                  <div>${prpIcon}</div>
+                  <div class="app-name">Partner Reporting Portal</div>
                 </div>
               </a>
             </div>
