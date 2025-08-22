@@ -374,7 +374,14 @@ export class AppShell extends LitElement {
                   <div class="app-name">gPD</div>
                 </div>
               </a>
-              <a href="${Environment.getHost('prp')}">
+              <a
+                href="${Environment.getHost('prp')}"
+                ?hidden="${!(
+                  !!this.userProfile?._partner_staff_member ||
+                  this.hasVisibilityByPartnerGroups ||
+                  !!this.showGPD(this.userProfile)
+                )}"
+              >
                 <div class="app-wrapper">
                   <div>${prpIcon}</div>
                   <div class="app-name">Partner Reporting Portal</div>
