@@ -12,7 +12,7 @@ import {
   lastMileIcon,
   pmpIcon,
   prpIcon,
-  tpmIcon,
+  ecnIcon,
   tripsIcon,
   unppIcon
 } from './app-selector-icons.js';
@@ -119,7 +119,7 @@ export class AppShell extends LitElement {
           font-size: var(--etools-font-size-16, 16px);
         }
         .app-name {
-          margin-top: 12px;
+          margin-top: 8px;
           text-align: center;
           font-weight: bold;
         }
@@ -368,23 +368,16 @@ export class AppShell extends LitElement {
                   <div class="app-name">ePD</div>
                 </div>
               </a>
-              <a href="/government/" ?hidden="${!this.showGPD(this.userProfile)}">
+              <a href="/government/" ?hidden="${!this.showGPD}">
                 <div class="app-wrapper">
                   <div>${gPDIcon}</div>
                   <div class="app-name">gPD</div>
                 </div>
               </a>
-              <a
-                href="${Environment.getHost('prp')}"
-                ?hidden="${!(
-                  !!this.userProfile?._partner_staff_member ||
-                  this.hasVisibilityByPartnerGroups ||
-                  !!this.showGPD(this.userProfile)
-                )}"
-              >
+              <a href="${Environment.getECNHost()}" ?hidden="${!this.showECN}">
                 <div class="app-wrapper">
-                  <div>${prpIcon}</div>
-                  <div class="app-name">Partner Reporting Portal</div>
+                  <div>${ecnIcon}</div>
+                  <div class="app-name">Concept Note</div>
                 </div>
               </a>
             </div>
@@ -399,10 +392,10 @@ export class AppShell extends LitElement {
                   <div class="app-name">Trip Management</div>
                 </div>
               </a>
-              <a href="/tpm/" ?hidden="${!this.showMonitoringApps}">
+              <a href="${Environment.getHost('prp')}" ?hidden="${!this.showPRP}">
                 <div class="app-wrapper">
-                  <div>${tpmIcon}</div>
-                  <div class="app-name">Third Party Monitoring</div>
+                  <div>${prpIcon}</div>
+                  <div class="app-name">Partner Reporting Portal</div>
                 </div>
               </a>
               <a href="/ap/" ?hidden="${!this.showAssuranceApps}">
@@ -481,6 +474,15 @@ export class AppShell extends LitElement {
 
   @property({type: Boolean})
   showLastMile = false;
+
+  @property({type: Boolean})
+  showGPD = false;
+
+  @property({type: Boolean})
+  showECN = false;
+
+  @property({type: Boolean})
+  showPRP = false;
 
   @property({type: Boolean})
   hasVisibilityByPartnerGroups = false;
@@ -588,8 +590,14 @@ export class AppShell extends LitElement {
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
     this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
+    this.showGPD =
+      !this.userProfile?.is_unicef_user && this.userProfile?.show_gpd && this.userProfile?.organization?.is_government;
+
+    this.showPRP = !!this.userProfile?._partner_staff_member || this.hasVisibilityByPartnerGroups || this.showGPD;
+    this.showECN = !this.userProfile?.is_unicef_user && !this.showMonitoringApps && !this.showAssuranceApps;
+
     this.showMonitoringOrAssuranceApps =
-      this.showAssuranceApps || this.showMonitoringApps || this.userProfile?.is_unicef_user || this.showLastMile;
+      this.showAssuranceApps || this.showMonitoringApps || this.showLastMile || this.showPRP;
   }
 
   getVisibilityByGroup(givenGroup: string) {
@@ -602,13 +610,6 @@ export class AppShell extends LitElement {
   getVisibilityByPartnerGroups() {
     const partnersGroups = ['IP Viewer', 'IP Admin', 'IP Editor', 'IP Authorized Officer'];
     return this.userProfile?.groups?.some((g: {id: number; name: string}) => partnersGroups.includes(g.name));
-  }
-
-  showGPD(userProfile: any) {
-    if (!userProfile) {
-      return false;
-    }
-    return !userProfile.is_unicef_user && userProfile.show_gpd && userProfile.organization?.is_government;
   }
 
   toggleUserProfileView() {
