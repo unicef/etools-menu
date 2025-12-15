@@ -1,22 +1,26 @@
-const express = require('express'); // eslint-disable-line
-const compression = require('compression'); // eslint-disable-line
-const browserCapabilities = require('browser-capabilities'); // eslint-disable-line
+import express from 'express';
+import compression from 'compression';
+import browserCapabilities from 'browser-capabilities';
+import {UAParser} from 'ua-parser-js';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-const basedir = __dirname + '/src/'; // eslint-disable-line
+const basedir = __dirname + '/src/';
+
+function getSourcesPath(request, filePath = '') {
+  const userAgent = request.headers['user-agent'];
+  const clientCapabilities = browserCapabilities.browserCapabilities(userAgent);
+  const browserName = new UAParser(userAgent).getBrowser().name || '';
+  // skip Edge because browser-capabilities library is outdated
+  const needToUpgrade = !clientCapabilities.has('modules') && browserName !== 'Edge';
+  return needToUpgrade ? `${basedir}upgrade-browser.html` : `${basedir}${filePath}`;
+}
 
 app.use(compression());
-
-function getSourcesPath(request) {
-  let clientCapabilities = browserCapabilities.browserCapabilities(request.headers['user-agent']);
-
-  clientCapabilities = new Set(clientCapabilities); // eslint-disable-line
-  if (clientCapabilities.has('modules')) {
-    return basedir;
-  } else {
-    return basedir;
-  }
-}
 
 app.use('/menu/', (req, res, next) => {
   express.static(getSourcesPath(req))(req, res, next);
