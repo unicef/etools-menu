@@ -27,7 +27,7 @@ import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparis
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 import translations from '../assets/translations';
-import {LMSMGroupsEnum} from './LMSMGroups.enum';
+import {UserGroupsEnum} from './UserGroupsEnum';
 
 declare global {
   interface Window {
@@ -591,13 +591,13 @@ export class AppShell extends LitElement {
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
     this.showLastMile = this.userProfile?.groups
       ?.map((g: {id: number; name: string}) => g.name)
-      .some((n: LMSMGroupsEnum) =>
+      .some((n: UserGroupsEnum) =>
         [
-          LMSMGroupsEnum.VIEWER,
-          LMSMGroupsEnum.EDITOR,
-          LMSMGroupsEnum.ADMIN,
-          LMSMGroupsEnum.ADMIN_CO,
-          LMSMGroupsEnum.ADMIN_HQ
+          UserGroupsEnum.LMSM_VIEWER,
+          UserGroupsEnum.LMSM_EDITOR,
+          UserGroupsEnum.LMSM_ADMIN,
+          UserGroupsEnum.LMSM_ADMIN_CO,
+          UserGroupsEnum.LMSM_ADMIN_HQ
         ].includes(n)
       );
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
