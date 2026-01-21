@@ -27,6 +27,7 @@ import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparis
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 import translations from '../assets/translations';
+import {LMSMGroupsEnum} from './LMSMGroups.enum';
 
 declare global {
   interface Window {
@@ -588,7 +589,17 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
+    this.showLastMile = this.userProfile?.groups
+      ?.map((g: {id: number; name: string}) => g.name)
+      .some((n: LMSMGroupsEnum) =>
+        [
+          LMSMGroupsEnum.VIEWER,
+          LMSMGroupsEnum.EDITOR,
+          LMSMGroupsEnum.ADMIN,
+          LMSMGroupsEnum.ADMIN_CO,
+          LMSMGroupsEnum.ADMIN_HQ
+        ].includes(n)
+      );
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
     this.showGPD =
       !this.userProfile?.is_unicef_user && this.userProfile?.show_gpd && this.userProfile?.organization?.is_government;
