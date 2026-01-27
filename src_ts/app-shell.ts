@@ -708,7 +708,7 @@ export class AppShell extends LitElement {
 
   isRSSUser(): boolean {
     return Boolean(
-      this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'RSS')
+      this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'RSS' || g.name === 'Rss Admin')
     );
   }
 }
