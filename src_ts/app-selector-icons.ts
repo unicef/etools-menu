@@ -803,9 +803,7 @@ export const ampIcon = html`<svg
   </g>
 </svg>`;
 
-
-export const rssAdminIcon = html`<svg  width="45"
-  height="45" viewBox="0 0 20 20" width="24">
+export const rssAdminIcon = html`<svg width="45" height="45" viewBox="0 0 20 20">
   <g id="rssAdminIcon">
     <rect fill="#568CA5" width="20" height="20" rx="4"></rect>
     <g>
@@ -820,7 +818,9 @@ export const rssAdminIcon = html`<svg  width="45"
         font-weight="bold"
         letter-spacing="0.2"
         dominant-baseline="middle"
-      >RSS</text>
+      >
+        RSS
+      </text>
       <text
         x="50%"
         y="70%"
@@ -832,7 +832,9 @@ export const rssAdminIcon = html`<svg  width="45"
         font-weight="bold"
         letter-spacing="0.1"
         dominant-baseline="middle"
-      >ADMIN</text>
+      >
+        ADMIN
+      </text>
     </g>
   </g>
 </svg>`;

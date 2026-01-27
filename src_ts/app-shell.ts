@@ -445,21 +445,21 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-          <fieldset ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups && !this.isRSSUser()}">
+          <fieldset
+            ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups && !this.isRSSUser()}"
+          >
             <legend class="larger-font">Access Management</legend>
             <div class="apps-container">
               ${this.userProfile?.is_unicef_user || this.hasVisibilityByPartnerGroups
                 ? html`
-                  <a href="/amp/">
-                    <div class="app-wrapper">
-                      <div>${ampIcon}</div>
-                      <div class="app-name">Access Management Portal</div>
-                    </div>
-                  </a>
-                `
+                    <a href="/amp/">
+                      <div class="app-wrapper">
+                        <div>${ampIcon}</div>
+                        <div class="app-name">Access Management Portal</div>
+                      </div>
+                    </a>
+                  `
                 : ''}
-
-
               ${this.isRSSUser()
                 ? html`
                     <a href="/administration/">
