@@ -788,9 +788,9 @@ export const datamartIcon = html`<svg id="datamart" height="45" viewBox="0 0 23 
 </svg>`;
 
 export const ampIcon = html`<svg
-  width="36px"
-  height="36px"
-  viewBox="0 0 24 24"
+  width="45"
+  height="45"
+  viewBox="-2 -2 28 28"
   fill="#ffffff"
   preserveAspectRatio="xMidYMid meet"
   focusable="false"
@@ -800,5 +800,41 @@ export const ampIcon = html`<svg
     <path
       d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
     ></path>
+  </g>
+</svg>`;
+
+export const rssAdminIcon = html`<svg width="45" height="45" viewBox="0 0 20 20">
+  <g id="rssAdminIcon">
+    <rect fill="#568CA5" width="20" height="20" rx="4"></rect>
+    <g>
+      <text
+        x="50%"
+        y="45%"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        font-family="Roboto, Arial, sans-serif"
+        font-size="7"
+        fill="#FFFFFF"
+        font-weight="bold"
+        letter-spacing="0.2"
+        dominant-baseline="middle"
+      >
+        RSS
+      </text>
+      <text
+        x="50%"
+        y="70%"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        font-family="Roboto, Arial, sans-serif"
+        font-size="4"
+        fill="#FFFFFF"
+        font-weight="bold"
+        letter-spacing="0.1"
+        dominant-baseline="middle"
+      >
+        ADMIN
+      </text>
+    </g>
   </g>
 </svg>`;

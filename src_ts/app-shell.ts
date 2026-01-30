@@ -14,7 +14,8 @@ import {
   prpIcon,
   ecnIcon,
   tripsIcon,
-  unppIcon
+  unppIcon,
+  rssAdminIcon
 } from './app-selector-icons.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
@@ -444,15 +445,31 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-          <fieldset ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups}">
+          <fieldset
+            ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups && !this.isRSSUser()}"
+          >
             <legend class="larger-font">Access Management</legend>
             <div class="apps-container">
-              <a href="/amp/">
-                <div class="app-wrapper">
-                  <div>${ampIcon}</div>
-                  <div class="app-name">Access Management Portal</div>
-                </div>
-              </a>
+              ${this.userProfile?.is_unicef_user || this.hasVisibilityByPartnerGroups
+                ? html`
+                    <a href="/amp/">
+                      <div class="app-wrapper">
+                        <div>${ampIcon}</div>
+                        <div class="app-name">Access Management Portal</div>
+                      </div>
+                    </a>
+                  `
+                : ''}
+              ${this.isRSSUser()
+                ? html`
+                    <a href="/administration/">
+                      <div class="app-wrapper">
+                        <div>${rssAdminIcon}</div>
+                        <div class="app-name">RSS Administration</div>
+                      </div>
+                    </a>
+                  `
+                : ''}
             </div>
           </fieldset>
         </div>
@@ -687,5 +704,11 @@ export class AppShell extends LitElement {
 
   protected clearLocalStorage() {
     localStorage.clear();
+  }
+
+  isRSSUser(): boolean {
+    return Boolean(
+      this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'RSS' || g.name === 'Rss Admin')
+    );
   }
 }
