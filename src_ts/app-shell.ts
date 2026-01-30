@@ -14,7 +14,8 @@ import {
   prpIcon,
   ecnIcon,
   tripsIcon,
-  unppIcon
+  unppIcon,
+  rssAdminIcon
 } from './app-selector-icons.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
@@ -27,6 +28,7 @@ import {isEmptyObject} from '@unicef-polymer/etools-utils/dist/equality-comparis
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {initializeIcons} from '@unicef-polymer/etools-unicef/src/etools-icons/etools-icons';
 import translations from '../assets/translations';
+import {UserGroupsEnum} from './UserGroupsEnum';
 
 declare global {
   interface Window {
@@ -443,15 +445,31 @@ export class AppShell extends LitElement {
             </div>
           </fieldset>
 
-          <fieldset ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups}">
+          <fieldset
+            ?hidden="${!this.userProfile?.is_unicef_user && !this.hasVisibilityByPartnerGroups && !this.isRSSUser()}"
+          >
             <legend class="larger-font">Access Management</legend>
             <div class="apps-container">
-              <a href="/amp/">
-                <div class="app-wrapper">
-                  <div>${ampIcon}</div>
-                  <div class="app-name">Access Management Portal</div>
-                </div>
-              </a>
+              ${this.userProfile?.is_unicef_user || this.hasVisibilityByPartnerGroups
+                ? html`
+                    <a href="/amp/">
+                      <div class="app-wrapper">
+                        <div>${ampIcon}</div>
+                        <div class="app-name">Access Management Portal</div>
+                      </div>
+                    </a>
+                  `
+                : ''}
+              ${this.isRSSUser()
+                ? html`
+                    <a href="/administration/">
+                      <div class="app-wrapper">
+                        <div>${rssAdminIcon}</div>
+                        <div class="app-name">RSS Administration</div>
+                      </div>
+                    </a>
+                  `
+                : ''}
             </div>
           </fieldset>
         </div>
@@ -588,7 +606,17 @@ export class AppShell extends LitElement {
   setAppsVisibility() {
     this.showAssuranceApps = this.getVisibilityByGroup('Auditor');
     this.showMonitoringApps = this.getVisibilityByGroup('Third Party Monitor');
-    this.showLastMile = this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'IP LM Editor');
+    this.showLastMile = this.userProfile?.groups
+      ?.map((g: {id: number; name: string}) => g.name)
+      .some((n: UserGroupsEnum) =>
+        [
+          UserGroupsEnum.LMSM_VIEWER,
+          UserGroupsEnum.LMSM_EDITOR,
+          UserGroupsEnum.LMSM_ADMIN,
+          UserGroupsEnum.LMSM_ADMIN_CO,
+          UserGroupsEnum.LMSM_ADMIN_HQ
+        ].includes(n)
+      );
     this.hasVisibilityByPartnerGroups = this.getVisibilityByPartnerGroups();
     this.showGPD =
       !this.userProfile?.is_unicef_user && this.userProfile?.show_gpd && this.userProfile?.organization?.is_government;
@@ -676,5 +704,11 @@ export class AppShell extends LitElement {
 
   protected clearLocalStorage() {
     localStorage.clear();
+  }
+
+  isRSSUser(): boolean {
+    return Boolean(
+      this.userProfile?.groups?.some((g: {id: number; name: string}) => g.name === 'RSS' || g.name === 'Rss Admin')
+    );
   }
 }
