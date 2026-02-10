@@ -612,6 +612,7 @@ export class AppShell extends LitElement {
         [
           UserGroupsEnum.LMSM_VIEWER,
           UserGroupsEnum.LMSM_EDITOR,
+          UserGroupsEnum.LMSM_CO_VIEWER,
           UserGroupsEnum.LMSM_ADMIN,
           UserGroupsEnum.LMSM_ADMIN_CO,
           UserGroupsEnum.LMSM_ADMIN_HQ
