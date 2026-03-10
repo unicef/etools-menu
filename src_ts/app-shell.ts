@@ -15,7 +15,8 @@ import {
   ecnIcon,
   tripsIcon,
   unppIcon,
-  rssAdminIcon
+  rssAdminIcon,
+  eFaceIcon
 } from './app-selector-icons.js';
 import '@unicef-polymer/etools-unicef/src/etools-loading/etools-loading';
 import '@unicef-polymer/etools-unicef/src/etools-dropdown/etools-dropdown';
@@ -380,6 +381,15 @@ export class AppShell extends LitElement {
                 <div class="app-wrapper">
                   <div>${ecnIcon}</div>
                   <div class="app-name">Concept Note</div>
+                </div>
+              </a>
+              <a
+                href="https://unicefpartners.b2clogin.com/unicefpartners.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SAP-POC-SignUpSignIn&client_id=1e538e17-caa3-4970-9bb9-1ba940614cf5&nonce=defaultNonce&redirect_uri=https%3A%2f%2funicef-sandbox.launchpad.cfapps.eu10.hana.ondemand.com%2f0cecede6-0756-4967-95e7-e44930950429.userCreationManagedAppRouter.usercreationapp-0.0.1%2findex.html&scope=openid&response_type=code"
+                ?hidden="${!this.userProfile?.is_unicef_user}"
+              >
+                <div class="app-wrapper">
+                  <div>${eFaceIcon}</div>
+                  <div class="app-name">eFace</div>
                 </div>
               </a>
             </div>

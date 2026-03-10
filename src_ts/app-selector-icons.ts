@@ -838,3 +838,33 @@ export const rssAdminIcon = html`<svg width="45" height="45" viewBox="0 0 20 20"
     </g>
   </g>
 </svg>`;
+
+export const eFaceIcon = html`
+  <svg width="45px" height="45px" viewBox="0 0 1.35 1.35" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      x="3"
+      y="3"
+      width="18.2842"
+      height="18.2842"
+      rx="9.14208"
+      stroke="#333333"
+      stroke-width="0.1125"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M0.683 0.169H0.683A0.514 0.514 0 0 1 1.197 0.683V0.683A0.514 0.514 0 0 1 0.683 1.197H0.683A0.514 0.514 0 0 1 0.169 0.683V0.683A0.514 0.514 0 0 1 0.683 0.169z"
+    />
+    <path d="M0.45 0.563h0.001" stroke="#333333" stroke-width="0.1125" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M0.9 0.563h0.001" stroke="#333333" stroke-width="0.1125" stroke-linecap="round" stroke-linejoin="round" />
+    <path
+      x1="10.3994"
+      y1="15.7131"
+      x2="13.8847"
+      y2="15.7131"
+      stroke="#333333"
+      stroke-width="0.1125"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M0.585 0.884L0.781 0.884"
+    />
+  </svg>
+`;
