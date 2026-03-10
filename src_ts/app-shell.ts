@@ -389,7 +389,7 @@ export class AppShell extends LitElement {
               >
                 <div class="app-wrapper">
                   <div>${eFaceIcon}</div>
-                  <div class="app-name">eFace</div>
+                  <div class="app-name">eFACE</div>
                 </div>
               </a>
             </div>
