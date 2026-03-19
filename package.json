@@ -12,23 +12,19 @@
   "type": "module",
   "scripts": {
     "tsToJs": "tsc --skipLibCheck || true",
-    "start": "rm -rf src && npm install && rollup -c rollup-dev.config.js -w --configPlugin @rollup/plugin-commonjs",
+    "start": "rm -rf src && pnpm install && rollup -c rollup-dev.config.js -w --configPlugin @rollup/plugin-commonjs",
     "build": "export NODE_OPTIONS=--max_old_space_size=4096 && rollup -c rollup-prod.config.js --configPlugin @rollup/plugin-commonjs",
     "lint:eslint": "eslint src_ts/**",
     "format:eslint": "eslint src_ts/** --fix",
-    "lint": "npm run lint:eslint",
-    "format": "npm run format:eslint",
-    "generate:icons": "npm --prefix node_modules/@unicef-polymer/etools-unicef run generate-icons -- --output=$(pwd)/assets/icons/ --icons=$(pwd)/assets/icons/icons.js",
-    "rd:init": "relative-deps init",
-    "rd:add": "relative-deps add",
-    "rd:reload": "relative-deps",
-    "rd:watch": "chokidar \"../../etools-polymer/**/*.js\" \"../../etools-polymer/**/**/*.js\" -c 'npm run rd:reload' --silent"
+    "lint": "pnpm run lint:eslint",
+    "format": "pnpm run format:eslint",
+    "generate:icons": "pnpm --dir node_modules/@unicef-polymer/etools-unicef run generate-icons -- --output=$(pwd)/assets/icons/ --icons=$(pwd)/assets/icons/icons.js"
   },
   "dependencies": {
     "@shoelace-style/shoelace": "2.20.1",
-    "@unicef-polymer/etools-unicef": "^2.0.0",
-    "@unicef-polymer/etools-utils": "^3.0.0",
-    "@unicef-polymer/etools-modules-common": "^6.0.0",
+    "@unicef-polymer/etools-unicef": "workspace:*",
+    "@unicef-polymer/etools-utils": "workspace:*",
+    "@unicef-polymer/etools-modules-common": "workspace:*",
     "lit": "^3.3.1",
     "tslib": "^2.8.1"
   },
@@ -56,7 +52,6 @@
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^3.0.0",
     "rollup-plugin-workbox": "^8.1.2",
-    "relative-deps": "^1.0.7",
     "braces": ">=3.0.3",
     "js-yaml": ">=4.1.1",
     "svg-sprite": "^2.0.4",
@@ -64,6 +59,5 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-musl": "^4.28.1"
-  },
-  "relativeDependencies": {}
+  }
 }
