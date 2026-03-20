@@ -116,7 +116,7 @@ const config = {
     resolveFromRootPlugin(),
     resolve({
       extensions: ['.js', '.ts'],
-      preserveSymlinks: false // 🔥 critical for pnpm
+      preserveSymlinks: false
     }),
     esbuild(),
     commonjs(),
